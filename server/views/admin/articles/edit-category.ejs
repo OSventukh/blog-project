@@ -1,0 +1,21 @@
+<%-include('../../includes/admin-header') %>
+  <main>
+    <h2>Add new article category</h2>
+    <form id="edit-category">
+      <div><%=message%></div>
+      <div class="form-control">
+        <label for="categoryName">Category Name:</label>
+        <input type="text" name="categoryName" id="categoryName" required>
+      </div>
+      <div class="form-control">
+        <label for="categorySlug">Category Slug:</label>
+        <input type="text" name="categorySlug" id="categorySlug">
+        <span class="input-desc">If you leave the slug field empty, it will be automatically generated from the category name</span>
+      </div>
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <div class="form-buttons">
+        <button class="button" type="submit">Save</button>
+      </div>
+    </form>
+  </main>
+<%-include('../../includes/admin-footer') %>

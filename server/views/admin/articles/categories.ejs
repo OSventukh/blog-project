@@ -1,0 +1,58 @@
+<%- include('../../includes/admin-header') %>
+  <main>
+    <h2>List of Article Categories</h2>
+  
+    <a class="button" href="/admin/articles/add-category">Add New Category</a>
+    <div class="content">
+      <table>
+        <colgroup>
+          <col class="name">
+          <col class="slug">
+          <col class="amount">
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Category Name</th>
+            <th>Category Slug</th>
+            <th>Number of Articles</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if (categories.length> 0) {%>
+            <% for (let category of categories) {%>
+              <tr>
+                <td>
+                  <% if (category.id !== 1) { %>
+                  <button class="item-option"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                  <ul class="item-option__list">
+                    <li>
+                      <a class="item-option__delete" href="#">Delete</a>
+                      <input type="hidden" name="itemId" value="<%=category.id%>">
+
+                    </li>
+                  </ul>
+                    <% } %>
+                  <%= category.category_name %>
+                </td>
+                <td>
+                  <%=category.category_slug %>
+                </td>
+                <td>
+                  <%=category.posts.length %>
+                </td>
+              </tr>
+              <% } %>
+                <%} else {%>
+                  <tr>
+                    <td colspan="4">No categories</td>
+                    
+                  </tr>
+                  <% } %>
+        </tbody>
+      </table>
+    </div>
+    <%-include('../../includes/pagination') %>
+
+  </main>
+
+<%- include('../../includes/admin-footer') %>

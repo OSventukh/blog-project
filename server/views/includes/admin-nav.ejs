@@ -1,0 +1,21 @@
+<nav class="admin-nav">
+
+  <ul>
+    <li class="admin-nav__return"><a href="/"><i class="fa-solid fa-reply"></i> Return to website</a></li>
+    <li class="admin-nav__item">
+      <a class="<%=pageTitle === 'Admin Panel' ? 'active' : ''%>" href="/admin">Home</a>
+      
+    </li>
+    <li class="admin-nav__item <%=pageTitle === 'Articles' || pageTitle === 'Article categories' ? 'active' : ''%>"><a class="" href="/admin/articles/">Articles</a>
+        <ul class="admin-nav__submenu">
+          <li class="admin-nav__subitem <%=pageTitle === 'Articles' ? 'active' : ''%>"><a href="/admin/articles/">All articles</a></li>
+          <li class="admin-nav__subitem <%=pageTitle === 'Article categories' ? 'active' : ''%>"><a href="/admin/articles/categories">Categories</a></li>
+        </ul>
+    </li>
+    <li class="admin-nav__item <%=pageTitle === 'Users' ? 'active' : ''%>"><a class="" href="/admin/users">Users</a></li>
+    <li class="admin-nav__item <%=pageTitle === 'Media' ? 'active' : ''%>"><a class="" href="/admin/media">Media</a></li>
+    <li class="admin-nav__item <%=pageTitle === 'Settings' ? 'active' : ''%>"><a class=""
+        href="/admin/settings">Settings</a></li>
+
+  </ul>
+</nav>

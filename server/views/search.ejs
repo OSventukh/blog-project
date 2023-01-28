@@ -1,0 +1,13 @@
+<%- include('./includes/header')%>
+    <main>
+      <h2>Search Results</h2>
+      <% if (posts.length > 0) { %> 
+        <% for (let post of posts) {%>
+          <%- include('./includes/post', {title: post.title, text: post.text, author: post.author, data: post.createdAt, id: post.id, commentsCount: post.commentsCount,})%>
+        <% } %>
+        
+      <% } else { %>
+        <div class="no-content">No results found</div>
+      <% }%>
+    </main>
+    <%- include('./includes/footer') %>

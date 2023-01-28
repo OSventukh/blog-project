@@ -1,0 +1,30 @@
+<%- include('../includes/header')%>
+    <main class="messenger">
+
+        <div class="messenger__users">
+          <ul class="messenger__users-list">
+            <% for (const user of users) { %> 
+              <li class="messenger__user-item" id="user-<%=user.id %>">
+                <span class="messenger__user-avatar">
+                  <img src="<%=user.avatar %>" alt="<%=user.nickname%>">
+                </span>
+                <div class="messanger__online-mark"></div>
+                <span class="messenger__user-nickname"><%=user.nickname%></span>
+              </li>
+            <%}%>
+          </ul>
+          <button class="messenger__user-mobile"><i class="fa-solid fa-users"></i></button>
+        </div>
+        <div class="messenger__messages">
+         
+        </div>
+        <div class="messenger__text">
+          <form class="private-message-form" id="private-message-form">
+            <textarea class="messenger__input" id="private-message" name="message" id="message" cols="30" rows="2"></textarea>
+            <button type="submit" class="button messenger__send">Send</button>
+          </form>
+        </div>
+
+     
+    </main>
+    <%- include('../includes/footer') %>

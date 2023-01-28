@@ -1,0 +1,39 @@
+
+
+<script src="https://cdn.socket.io/4.5.3/socket.io.min.js" integrity="sha384-WPFUvHkB1aHA5TDSZi6xtDgkF0wXJcIIxXhC6h8OT8EH3fC5PWro5pWJ1THjcfEi" crossorigin="anonymous"></script>
+<script>
+  const currentUser = '<%=loggedUser?.id %>';
+
+  const socket = io();
+
+  socket.emit('user', currentUser);
+
+</script>
+<script src="/js/index.js"></script>
+<% if (templateName === 'signup') { %> 
+  <script src="/js/signup.js"></script>
+<% } %>
+  
+<% if (templateName === 'add-post') { %> 
+  <script src="/js/ckeditor.js"></script>
+<!-- type: module should be delete before building -->
+  <script src="/js/editor.js" type="module"></script>
+<% } %>
+
+<% if (templateName === 'reset') { %>
+  <script src="/js/reset.js"></script>
+<% } %>
+
+<% if (templateName === 'user-articles') { %>
+  <script src="/js/user-articles.js"></script>
+<% } %>
+
+<% if (templateName === 'single-post') { %>
+  <script src="/js/article.js"></script>
+  <% } %>
+  
+  <% if (templateName === 'user-messages') { %> 
+  <script src="/js/messages.js">
+    import { io } from "https://cdn.socket.io/4.3.2/socket.io.esm.min.js";
+  </script>
+<% } %>

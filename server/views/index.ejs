@@ -1,0 +1,27 @@
+<%- include('./includes/header')%>
+    <main>
+      <% if (isAuthenticated) { %> 
+        <div class="article-edit__controls flex-end">
+          <a href="/post-edit" class="button"><i class="fa-solid fa-pen-to-square"></i>Add Article</a>
+        </div>
+      
+      <% } %>
+      <% if (posts.length > 0) { %> 
+        <% for (let post of posts) {%>
+          <%- include('./includes/post', {
+            title: post.title, 
+            previewContent: post.previewContent, 
+            author: post.author, 
+            data: post.createdAt, 
+            id: post.id,
+            slug: post.slug,
+            commentsCount: post.commentsCount,
+          })%>  
+        <% } %>
+          
+          <%-include('./includes/pagination')%>
+      <% } else { %>
+        <div class="no-content">There are no articles yet</div>
+      <% }%>
+    </main>
+    <%- include('./includes/footer') %>

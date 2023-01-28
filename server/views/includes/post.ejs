@@ -1,0 +1,13 @@
+<article class="article article-preview">
+  <div class="article-preview__header">
+    <h2 class="article-preview__title"><a href="/post/<%= slug %>"><%- title %></a></h2>
+  </div>
+  <div class="article-preview__content">
+    <%- previewContent %>
+  </div>
+  <div class="article-preview__footer">
+    <span class="article-preview__author">Author: <%= author.nickname %></span> |
+    <span class="article-preview__publish-date">Date: <%= data %></span> |
+    <span class="aritcle-preview__comments"><a href="/post/<%=slug%>#comments" title="comments"><i class="fa-solid fa-comments"></i> <%= commentsCount %></a></span>
+  </div>
+</article>

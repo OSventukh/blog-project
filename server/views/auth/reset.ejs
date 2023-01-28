@@ -1,0 +1,34 @@
+<%- include('../includes/header', {
+  metatags: [],
+  links: [],
+  scripts: [],
+}) %>
+<main>
+  <% if (loggedUser) { %>
+    <h2 class="page-title">Confirm you current password</h2>
+
+  <% } else { %>
+    <h2 class="page-title">Enter you email</h2>
+  <% } %>
+
+  <form class="reset-form" id="reset-form" >
+    <% if (loggedUser) { %> 
+      <div class="form-control">
+        <input type="password" name="password" id="reset-password" autocomplete="current-password" required>
+      </div>
+      
+    <%} else { %>
+    <div class="form-control">
+      <input type="email" name="email" id="reset-email" autocomplete="email" required>
+    </div>
+    <% } %>
+    <div class="form-buttons">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <button class="button button-submit" type="submit">Confirm</button>
+    </div>
+  </form>
+</main>
+
+<%- include('../includes/footer', {
+  scripts: ['<script src="/javascripts/reset.js"></script>'],
+}) %>

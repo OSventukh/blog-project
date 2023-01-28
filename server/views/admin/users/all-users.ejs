@@ -1,0 +1,69 @@
+<%-include('../../includes/admin-header') %>
+    <main class="admin-section">
+      <div class="multiple-options">
+        <div class="multiple-options__checked-num">Selected items: <span></span></div>
+        <div class="multiple-options__actions">
+          <button class="button" id="delete-multiple-items">delete</button>
+        </div>
+      </div>
+        <h2 class="title">Users</h2>
+        <div class="admin-panel__item-amount">Amount: <%= users.length %></div>
+        <table class="users">
+          <colgroup>
+            <col class="check">
+            <col class="avatar">
+
+            <col class="name">
+            <col class="role">
+            <col class="email">
+            <col class="date">
+            <col class="actions">
+          </colgroup>
+          <thead>
+            <tr>
+              <th></th>
+              <th></th>
+
+              <th>Name</th>
+              <th>Role</th>
+              <th>Email</th>
+              <th>Registration Date</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+          <% if (users.length > 0) {%>
+            <% for (let user of users) {%>
+              <tr>
+                <td><input type="checkbox" class="users__check" value="<%= user.id %>"/></td>
+                <td><img class="user-avatar" src="/<%=user.avatar%>" alt="<%=user.nickname%>"/></td>
+                <td>
+                 
+                  <a href="/profile/<%=user.nickname %>">
+                    
+                    <%=user.nickname %>
+                  </a>
+                </td>
+                <td><%=user.role %></td>
+                <td><%=user.email %></a></td>
+                <td><%=user.createdAt.toLocaleString() %></td>
+                <td>
+                  <button class="table-options"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                  <ul class="table-options-list">
+                    <li>
+                      <a class="users__item-delete" href="#">Delete</a>
+                      <input type="hidden" name="articleId" value="<%=user.id%>">
+                    </li>
+                  </ul>
+                  </td>
+           
+              </tr>
+            <% } %>
+          <%} else {%>
+            <tr>No articles</tr>
+          <% } %>
+        </tbody>
+        </table>
+
+    </main>
+    <%-include('../../includes/admin-footer') %>

@@ -1,0 +1,46 @@
+<%- include('../includes/header', {
+  metatags: [],
+  links: [],
+  scripts: []
+}) %>
+
+<main class="article-edit">
+    <div class="article-edit__editor-area">
+      <input class="article-edit__input article-edit__title" id="article-title" placeholder="" type="text"value="<%=title%>" />
+      <div class="article-edit__editor-wrapper">
+        <div id="editor" class="article-edit__editor"></div>
+      </div>
+    </div>
+    <div class="article-edit__control-area"> 
+        <% if (status !== 'published') { %>
+          <button class="button article-edit__publish" id="publish">Publish</button>
+        <% } %>
+    
+        <% if (status === 'published') { %>
+          <button class="button article-edit__publish" id="publish">Update</button>
+        <% } %>
+    
+        <% if (status === 'draft' || status !== 'published') { %>
+          <button class="button article-edit__save" id="save" type="submit">save as draft</button>
+        <% } %>
+        <%  if (articleCategory.length > 0) { %>
+          <label for="article-category" class="article-edit__label">Category:</label>
+           <select class="article-edit__category" id="article-category" name="category">
+             <% for(let category of articleCategory) { %> 
+               <option value="<%=category.id %>"><%=category.category_name%></option>
+             <% } %> 
+           </select>
+         <% } %>
+        <label for="slug" class="article-edit__label">Slug:</label>
+        <input type="text" class="article-edit__input" id="article-slug" value="<%=slug%>" />
+        <label for="tags" class="article-edit__label">Tags: </label>
+        <input type="text" class="article-edit__input" name="tags" id="article-tags" value="<%=tags%>">
+        <span class="article-edit__tags-descr">(use a comma, space or semicolon to separate them)</span>
+      
+        <input type="hidden" name="postId" value="<%=postId%>">
+        <input type="hidden" name="categoryId" value="<%=categoryId%>">
+   
+    </div>
+
+</main>
+<%- include('../includes/footer') %>

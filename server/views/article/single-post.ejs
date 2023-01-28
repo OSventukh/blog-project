@@ -1,0 +1,69 @@
+<%- include('../includes/header') %>
+
+<main>
+ 
+  <article class="article">
+    <% if (isAuthenticated && loggedUser.id === author.id) { %> 
+      <div class="article__options">
+        <button class="article__options-btn">
+          <i class="fa-solid fa-ellipsis-vertical"></i>
+        </button>
+        <ul class="article__options-list">
+          <li>
+            <a class="" href="/post-edit?id=<%=id%>"><i class="fa-solid fa-pen-to-square"></i> Edit article</a>
+          </li>
+          <li>
+            <a href="#" id="delete-article"><i class="fa-solid fa-trash"></i> Delete article</a>
+            <input type="hidden" name="articleId" value="<%= id %>">
+          </li>
+        </ul>
+      </div>
+    <% } %>
+    <h2 class="article__title"><%= pageTitle %></h2>
+    <%- text %>
+  </article>
+  <hr>
+  <div class="article__category">Category: <a href="/category/<%=category.category_slug %>"><%= category.category_name %></a></div>
+  <div class="article__tags">Tags: <% tags.forEach(function(tag) { %> <a href="/tag/<%=tag%>"><%=tag%></a> <%}) %> </div>
+  <div class="comments" id="comments">
+    <div class="comments__list">
+      <% if (comments.length > 0) { %> 
+        <% for (const comment of comments) { %> 
+          <div class="comment">
+            <% if (isAuthenticated && loggedUser.id === author.id) { %> 
+            <div class="comment__options">
+              <button class="comment__options-btn">
+                <i class="fa-solid fa-ellipsis-vertical"></i>
+              </button>
+              <ul class="comment__options-list">
+                <li>
+                  <a href="#" data-comment-id="<%=comment.id %>">Delete</a>
+                  <input type="hidden" name="commentId" id="commentId" value="<%=comment.id %>">
+                </li>
+              </ul>
+            </div>
+            <% } %>
+            <div class="comment__user-avatar"><img src="/<%=comment.author.avatar%>" alt="<%=comment.author.nickname%>'s avatar"></div>
+            <div class="comment__username"><%=comment.author.nickname%></div>
+
+            <div class="comment__text" style="white-space: pre-line"><%=comment.text %></div>
+          </div>
+        <% } %>
+      <% } else {%>
+        <div class="no-comments">There are no comments yet.</div>
+      <% } %>
+    </div>
+    <% if (isAuthenticated) { %> 
+      <form class="comments__form" action="/article-comments" method="post">
+        <textarea class="comments__input-text" maxlength="300" name="comment" id="comment" placeholder="Leave your comment..."></textarea>
+        <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+        <input type="hidden" name="articleId" value="<%=id%>">
+        <button type="submit" class="button">Comment</button>
+      </form>
+    <% } %>
+
+  </div>
+  
+</main>
+
+<%-include('../includes/footer') %>

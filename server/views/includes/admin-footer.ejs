@@ -1,0 +1,28 @@
+    
+      <div class="backdrop"></div>
+      <div class="modal" tabindex="0">
+        <div class="modal__header">
+          <div class="modal__close">&#10006;</div>
+        </div>
+        <div class="modal__content">
+
+        </div>
+      </div>
+    </div>
+
+    <script src="/js/admin.js"></script>
+    <% if (templateName === 'create-root-admin') { %>
+      <script src="/js/create-root-admin.js"></script>
+    <% } %>
+
+    <% if (templateName === 'media') { %>
+      <script src="/js/media.js"></script>
+    <% } %>
+
+
+    <% if (pageTitle === 'Article categories' || pageTitle === 'Add new category') { %>
+      <script src="/js/category.js"></script>
+    <% } %>
+
+  </body>
+</html>

@@ -1,0 +1,135 @@
+<%-include('../../includes/admin-header') %>
+
+
+  <main>
+    <div class="multiple-options">
+      <div class="multiple-options__checked-num">Selected items: <span></span></div>
+      <div class="multiple-options__actions">
+        <button class="button" id="delete-multiple-items">delete</button>
+      </div>
+    </div>
+    <h2>List of Articles</h2>
+    <div class="admin-panel__item-amount">Amount: <%= articlesCount %>
+    </div>
+    <div class="article__tabs">
+      <button class="<%=!status || status === 'all' ? 'active' : '' %>" id="all">All</button>
+      <button class="<%=status === 'published' ? 'active' : '' %>" id="published">Published</button>
+      <button class="<%=status === 'draft' ? 'active' : '' %>" id="draft">Draft</button>
+    </div>
+    <table class="articles">
+      <colgroup>
+        <col class="check">
+        <col class="name">
+        <col class="author">
+        <col class="status">
+        <col class="date">
+        <col class="actions">
+      </colgroup>
+      <thead>
+        <tr>
+          <th></th>
+          <th>Title</th>
+          <th>Author</th>
+          <th>Status</th>
+          <th>Data</th>
+          <th></th>
+
+        </tr>
+      </thead>
+      <tbody>
+        <% if (articles.length> 0) {%>
+          <% for (let article of articles) {%>
+            <tr>
+              <td><input type="checkbox" class="articles__check" value="<%= article.id %>"/></td>
+              <td>
+                <a href="/post-edit?id=<%= article.id %>">
+                  <%=article.title %>
+                </a>
+              </td>
+              <td>
+                <%=article.author.nickname %>
+              </td>
+              <td>
+                <%=article.status %>
+              </td>
+              <td>
+                <%=article.createdAt.toLocaleString() %>
+              </td>
+              <td>
+                <button class="table-options"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                <ul class="table-options-list">
+                  <li>
+                    <a class="articles__item-delete" href="#">Delete</a>
+                    <input type="hidden" name="articleId" value="<%=article.id%>">
+                  </li>
+                </ul>
+              </td>
+            </tr>
+            <% } %>
+              <%} else {%>
+                <tr>
+                  <td colspan="6">No articles</td>
+
+                </tr>
+                <% } %>
+      </tbody>
+    </table>
+    <%-include('../../includes/pagination') %>
+  </main>
+  </div>
+  <script>
+    function queryHandler(id, status) {
+      document.getElementById(id).addEventListener('click', (e) => {
+        const searchParams = new URLSearchParams(window.location.search);
+        e.target.classList.add('active')
+        searchParams.set('status', status)
+        searchParams.set('page', 1)
+        window.location.search = searchParams.toString();
+      })
+
+    }
+
+    queryHandler('all', 'all');
+    queryHandler('published', 'published');
+    queryHandler('draft', 'draft');
+
+    const pages = document.querySelectorAll('.page');
+    const prev = document.querySelector('.prev');
+    const next = document.querySelector('.next');
+
+    pages.forEach((page, i) => {
+      page.addEventListener('click', (e) => {
+        e.preventDefault();
+        const searchParams = new URLSearchParams(window.location.search);
+        console.log(searchParams.get('page'))
+        searchParams.set('page', i + 1)
+        window.location.search = searchParams.toString();
+      })
+    })
+
+    if (prev) {
+      prev.addEventListener('click', (e) => {
+        console.log('prev')
+        e.preventDefault();
+        const searchParams = new URLSearchParams(window.location.search);
+        const currentPage = +searchParams.get('page');
+        searchParams.set('page', currentPage - 1);
+        window.location.search = searchParams.toString();
+      })
+    }
+
+
+
+    if (next) {
+      next.addEventListener('click', (e) => {
+        console.log('next')
+        e.preventDefault();
+        const searchParams = new URLSearchParams(window.location.search);
+        const currentPage = +searchParams.get('page');
+        searchParams.set('page', currentPage + 1);
+        window.location.search = searchParams.toString();
+      })
+
+    }
+  </script>
+  <%-include('../../includes/admin-footer') %>

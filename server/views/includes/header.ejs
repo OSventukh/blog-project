@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="csrf-token" content="<%=csrfToken %>">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex">
+
+    <title><%= pageTitle ? pageTitle + ' -': ''%> <%= typeof siteName !== 'undefined' ? siteName : 'Site Name' %></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css?ver=1" />
+    <link rel='stylesheet' href='/style/style.css' />
+    <link rel='stylesheet' href='/style/post.css' />
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <div class="navigation">
+          <form class="search-form" action="/search" method="post">
+            <input class="search-form__input" type="search" name="search" id="search" placeholder="search...">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <button class="button search-form__button" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+          </form>
+          <nav class="navigation__menu">
+            
+            <ul class="navigation__list">
+              <li><a href="/">Home</a></li>
+              <% if (typeof articleCategory !== 'undefined' && articleCategory.length > 0) { %>
+                <% for (const category of articleCategory) { %>
+                  <% if (category.category_name === 'Uncategorized') { %> <%continue %> <% } %>
+                  <li><a href="/category/<%=category.category_slug %>"><%= category.category_name %></a></li>
+                <% } %>
+              <% } %>
+            </ul>
+            
+         
+            <div class="navigation__user">
+              <% if (isAuthenticated) { %>
+  
+                <div class="navigation__profile">
+                    <div class="navigation__logged-user" id="loggedUserAvatar" tabindex="0" >
+                      <img src="/<%=loggedUser.avatar%>" alt="<%=loggedUser.nickname %>">
+                    </div>
+                    <ul class="navigation__submenu">
+                      <li><a href="/messages">Messages</a></li>
+                      <li><a href="/profile/<%=loggedUser.nickname%>">Profile</a></li>
+                      <% if (loggedUser.role === 'admin') { %> 
+                        <li><a href="/admin">Admin Panel</a></li>
+
+                      <% } %>
+                      <% if (loggedUser.role === 'admin' || loggedUser.role === 'writter') { %> 
+                        <li><a href="/my-articles">My Articles</a></li>
+
+                      <% } %>
+                      <li><form class="logout-form"action="/logout" method="post">
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                        <button class="logout-form__button" type="submit" title="logout"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</button>
+                      </form></li>
+                    </ul>
+                    
+                </div>
+              <% } else {%>
+                <div class="navigation__auth">
+                  <button class="button navigation__login" id="login-button">Login</button>
+                  <a class="button navigation__signup" href="/signup">SignUp</a>
+                </div>
+              <% } %>
+            </div>
+            <button class="navigation__mobile-menu-btn"><i class="fa-solid fa-bars"></i></button>
+          </nav>
+        </div>
+        <div class="header__title-wrap">
+          <h1 class="header__title"><a href="/"><%=siteName%></a></h1>
+        </div>
+      </header>

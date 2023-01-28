@@ -1,0 +1,33 @@
+<%- include('../includes/header', { metatags: [], links: [], scripts: [], }) %>
+  <main>
+    <form class="signup-form" id="signup-form" action="/signup" method="post">
+
+      <div class="form-control">
+        <label for="signup-email">Email:</label>
+        <div class="input-wrap">
+          <input type="email" name="email" id="signup-email" autocomplete="email" required>
+          <i class="fa-solid fa-envelope"></i>
+        </div>
+      </div>
+      <div class="form-control">
+        <label for="signup-nickname">Nickname:</label>
+        <div class="input-wrap">
+          <input type="text" name="nickname" id="signup-nickname" autocomplete="nickname" maxlength="30" required>
+          <i class="fa-solid fa-user"></i>
+        </div>
+      </div>
+      <div class="form-control">
+        <label for="signup-password">Password:</label>
+        <div class="input-wrap">
+          <input type="password" name="password" id="signup-password" autocomplete="new-password" maxlength="40" required>
+          <i class="fa-solid fa-key"></i>
+        </div>
+      </div>
+      <div class="form-buttons">
+        <button class="button button-submit" type="submit">SignUp</button>
+
+      </div>
+    </form>
+  </main>
+
+  <%- include('../includes/footer') %>

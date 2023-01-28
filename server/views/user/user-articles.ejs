@@ -1,0 +1,31 @@
+<%- include('../includes/header')%>
+  <main>
+    <div class="article__tabs">
+      <button class="<%=!status || status === 'all' ? 'active' : '' %>" id="all">All</button>
+      <button class="<%=status === 'published' ? 'active' : '' %>" id="published">Published</button>
+      <button class="<%=status === 'draft' ? 'active' : '' %>" id="draft">Draft</button>
+    </div>
+    <% if (posts.length > 0) { %>
+      <% for (let post of posts) {%>
+        <%- include('../includes/post', {
+          title: post.title, 
+          previewContent: post.content, 
+          author: post.author, 
+          data: post.createdAt, 
+          id: post.id,
+          commentsCount: post.commentsCount,
+          slug: post.slug,
+        })%>  
+      <% } %>
+        
+        <%-include('../includes/pagination')%>
+    <% } else if (status === 'draft') { %> 
+      <div class="no-content">You have no drafts</div>
+    <% } else { %> 
+      <div class="no-content">You haven't written any articles yet</div>
+    <% } %>
+  </main>
+  <script>
+    
+  </script>
+<%- include('../includes/footer') %>

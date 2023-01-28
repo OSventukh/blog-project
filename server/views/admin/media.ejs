@@ -1,0 +1,43 @@
+<%-include('../includes/admin-header') %>
+  <main class="media">
+    <div class="multiple-options">
+      <div class="multiple-options__checked-num">Selected items: <span></span></div>
+      <div class="multiple-options__actions">
+        <button class="button" id="delete-multiple-items">delete</button>
+      </div>
+    </div>
+    <div class="multiple-options">
+      <div class="multiple-options__checked-num">Checked items: <span></span></div>
+      <div class="multiple-options__actions">
+        <button class="button" id="delete-multiple-items">delete</button>
+      </div>
+    </div>
+    <h2>Media</h2>
+    <div class="admin-panel__item-amount">Amount: <span><%= media.length %></span>
+    </div>
+    <% if (media) { %>
+      <div class="media__wrapper">
+        <% for(let item of media) { %>
+          <div class="media__item">
+            <div class="media__options">
+              <input type="checkbox" class="media__check" value="<%=item %>">
+              <div class="media__buttons">
+                <button class="media__geturl" title="copy url"><i class="fa-solid fa-clipboard"></i></button>
+                <form id="delete-media">
+                  <input type="hidden" name="mediaUrl" value="<%=item %>">
+                  <button class="media__item-delete" title="delete media"><i class="fa-solid fa-trash"></i></button>
+                </form>
+              </div>
+            </div>
+            <img src="/media/images/<%=item %>" alt="image">
+
+          </div>
+          <% } %>
+
+      </div>
+      <% } else { %>
+        <p>No media yet</p>
+      <% } %>
+  </main>
+
+<%-include('../includes/admin-footer') %>
