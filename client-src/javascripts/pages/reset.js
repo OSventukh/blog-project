@@ -22,17 +22,14 @@ function resetPassword() {
       email = emailInput.value.trim();
     }
 
-    const response = await postData('/reset', {
-      password: password ? password : null,
-      email: email ? email : null,
-    });
-
-    if (response.ok) {
-      return (location = '/?confirm-email');
-    }
-
-    if (response.message) {
-      notificationShow(response.message, '#reset-form', 'error', false, 'afterbegin')
+    try {
+      const response = await postData('/reset', {
+        password: password ? password : null,
+        email: email ? email : null,
+      });
+      location = '/?confirm-email'
+    } catch (error) {
+      notificationShow(error.message, '#reset-form', 'error', false, 'afterbegin')
     }
   });
 }

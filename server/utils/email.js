@@ -1,12 +1,12 @@
 const nodemailer = require('nodemailer');
 
 const transporter = nodemailer.createTransport({
-  host: 'mail.vethealth.com.ua',
+  host: process.env.EMAIL_HOST,
   port: 465,
   secure: true,
   auth: {
-    user: 'test@vethealth.com.ua',
-    pass: 'Ukp734NLsFCYMw7',
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASSWORD,
   },
   tls: {
     // do not fail on invalid certs

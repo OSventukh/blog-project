@@ -7,7 +7,6 @@ const hashedPassword = require('../utils/hashPass');
 const io = require('../socket');
 
 exports.getSignup = (req, res, next) => {
-  
   if (req.session.isLoggedIn) {
     return res.redirect('/');
   }
@@ -134,7 +133,7 @@ exports.postLogin = (req, res, next) => {
           req.session.user = user;
           io.getSocket().emit('userId', {
             userId: user.id,
-          })
+          });
           return req.session.save(() =>
             res.status(200).json({
               message: 'success',
@@ -298,7 +297,9 @@ exports.postNewPassword = (req, res, next) => {
     }
     bcrypt.hash(newPassword, 12).then((hashedPassword) => {
       user.password = hashedPassword;
-      (user.confirmationCode = null), (user.confirmationCodeExpiration = null);
+      user.status = 'active';
+      user.confirmationCode = null;
+      user.confirmationCodeExpiration = null;
       return user.save().then(() => {
         req.session.destroy((error) => {
           if (error) {
