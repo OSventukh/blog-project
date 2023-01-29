@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "postgres",
+    "password": "20121990",
+    "database": "petblog_db",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "root",
+    "password": "MyDoom20121990",
+    "database": "narutomanga-node",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "h40304c_wp104",
+    "password": "7j061S.P[p",
+    "database": "h40304c_test",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}
