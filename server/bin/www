@@ -9,6 +9,7 @@ const { createServer } = require('http');
 const debug = require('debug')('createServer');
 const { sequelize } = require('../models');
 const app = require('../app');
+
 /**
  * Get port from environment and store in Express.
  */
@@ -80,7 +81,7 @@ function onError(error) {
  */
 
 sequelize
-  .sync({alter: true})
+  .sync()
   .then(() => {
     server.listen(port);
     const io = require('../socket').init(server);
@@ -95,7 +96,7 @@ sequelize
 
     const getUser = (userId) => {
       const user = registeredUser.find((user) => user.userId === userId);
-      return user
+      return user;
     };
 
     const removeUser = (socketId) => {
@@ -113,17 +114,16 @@ sequelize
 
       // send and get message
 
-      socket.on('sendMessage', ({sender, receiver, message}) => {
+      socket.on('sendMessage', ({ sender, receiver, message }) => {
         const user = getUser(receiver);
         if (user) {
           io.to(user.socketId).emit('getMessage', {
             sender,
             message,
             createdAt: new Date(),
-          })
-
+          });
         }
-      })
+      });
       // disconnection
       socket.on('disconnect', () => {
         removeUser(socket.id);

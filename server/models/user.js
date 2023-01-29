@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true,
         get() {
           if (!this.getDataValue('avatar')) {
-            return 'media/avatars/default.jpg';
+            return 'images/default_avatar.jpg';
           }
           return this.getDataValue('avatar');
         },
