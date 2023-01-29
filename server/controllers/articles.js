@@ -4,7 +4,6 @@ const slugifyString = require('../utils/slugify');
 const { validationResult } = require('express-validator');
 const { Op } = require('sequelize');
 const jsdom = require('jsdom');
-const { post } = require('../routes');
 const { JSDOM } = jsdom;
 
 const contentDivider =

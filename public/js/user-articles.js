@@ -16,7 +16,7 @@
   \*******************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _ui_tabs_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../ui/tabs.js */ \"./client-src/javascripts/ui/tabs.js\");\n\r\n\r\n\r\n(0,_ui_tabs_js__WEBPACK_IMPORTED_MODULE_0__[\"default\"])('all', 'all');\r\n(0,_ui_tabs_js__WEBPACK_IMPORTED_MODULE_0__[\"default\"])('published', 'published');\r\n(0,_ui_tabs_js__WEBPACK_IMPORTED_MODULE_0__[\"default\"])('draft', 'draft');\r\n\n\n//# sourceURL=webpack://narutomanganode/./client-src/javascripts/pages/user-articles.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _ui_tabs_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../ui/tabs.js */ \"./client-src/javascripts/ui/tabs.js\");\n\r\n\r\n\r\n(0,_ui_tabs_js__WEBPACK_IMPORTED_MODULE_0__[\"default\"])('all', 'all');\r\n(0,_ui_tabs_js__WEBPACK_IMPORTED_MODULE_0__[\"default\"])('published', 'published');\r\n(0,_ui_tabs_js__WEBPACK_IMPORTED_MODULE_0__[\"default\"])('draft', 'draft');\r\n\n\n//# sourceURL=webpack://blog-project/./client-src/javascripts/pages/user-articles.js?");
 
 /***/ }),
 
@@ -26,7 +26,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _ui_
   \*******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ tabs)\n/* harmony export */ });\nfunction tabs(id, status) {\r\n  document.getElementById(id).addEventListener('click', (e) => {\r\n    const searchParams = new URLSearchParams(window.location.search);\r\n    e.target.classList.add('active')\r\n    searchParams.set('status', status)\r\n    searchParams.set('page', 1)\r\n    window.location.search = searchParams.toString();\r\n  })\r\n\r\n}\r\n\r\n\n\n//# sourceURL=webpack://narutomanganode/./client-src/javascripts/ui/tabs.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ tabs)\n/* harmony export */ });\nfunction tabs(id, status) {\r\n  document.getElementById(id).addEventListener('click', (e) => {\r\n    const searchParams = new URLSearchParams(window.location.search);\r\n    e.target.classList.add('active')\r\n    searchParams.set('status', status)\r\n    searchParams.set('page', 1)\r\n    window.location.search = searchParams.toString();\r\n  })\r\n\r\n}\r\n\r\n\n\n//# sourceURL=webpack://blog-project/./client-src/javascripts/ui/tabs.js?");
 
 /***/ })
 

@@ -1,10 +1,8 @@
 const { User, Post, Message } = require('../models');
 
 const { Op } = require('sequelize');
-
-const edjsHTML = require('editorjs-html');
-const edjsParser = edjsHTML();
 const io = require('../socket');
+
 exports.getUserProfile = (req, res, next) => {
   const username = req.params.username;
   const edit = req.query.edit;
