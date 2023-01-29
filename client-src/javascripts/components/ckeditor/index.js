@@ -51,10 +51,11 @@ async function saveData(
 }
 
 async function getPreviousContent(editor, postId) {
-  const response = await getData(`/post-edit/${postId}`);
-
-  if (response.ok) {
-    return editor.setData(response.content);
+  try {
+    const response = await getData(`/post-edit/${postId}`);
+    editor.setData(response.content);
+  } catch (error) {
+    modalShow(error.message);
   }
 }
 

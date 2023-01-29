@@ -12,7 +12,7 @@ function signup() {
     const password = document.getElementById('signup-password').value;
 
     try {
-      const response = await postData('/signup', {
+      await postData('/signup', {
         email: email,
         nickname: nickname,
         password: password,

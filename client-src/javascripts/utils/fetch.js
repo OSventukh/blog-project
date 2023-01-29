@@ -4,7 +4,11 @@ const token = document
 
 export async function getData(url) {
   const res = await fetch(url);
-  return { ...(await res.json()), ok: res.ok };
+  const result = await res.json()
+  if (!res.ok) {
+    throw new Error(result.message || 'Something went wrong')
+  }
+  return result;
 }
 
 export async function postData(url, data, contentType) {
@@ -17,11 +21,11 @@ export async function postData(url, data, contentType) {
     body: contentType ? data : JSON.stringify(data),
   });
 
-  const response = await res.json();
+  const result = await res.json();
 
   if (!res.ok) {
-    throw new Error(response.message || 'Something went wrong');
+    throw new Error(result.message || 'Something went wrong');
   }
 
-  return response;
+  return result;
 }
