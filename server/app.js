@@ -63,25 +63,19 @@ app.use('/media', express.static(path.join(__dirname, '../media')));
 const imageStorage = multer.diskStorage({
   destination: (req, file, cb) => {
     if (file.fieldname === 'avatar') {
-      const avatarsFolderPath = path.join(process.cwd(), 'media', 'avatars');
-      fs.mkdir(avatarsFolderPath, { recursive: true }, (error) => {
-        if (error) {
-          console.log(error);
-        } else {
-          cb(null, 'media/avatars');
-        }
-      });
+      if (error) {
+        console.log(error);
+      } else {
+        cb(null, 'media/avatars');
+      }
     }
 
     if (file.fieldname === 'upload') {
-      const imagesFolderPath = path.join(process.cwd(), 'media', 'images');
-      fs.mkdir(imagesFolderPath, { recursive: true }, (error) => {
-        if (error) {
-          console.log(error);
-        } else {
-          cb(null, imagesFolderPath);
-        }
-      });
+      if (error) {
+        console.log(error);
+      } else {
+        cb(null, imagesFolderPath);
+      }
     }
   },
   filename: (req, file, cb) => {

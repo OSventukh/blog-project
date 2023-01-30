@@ -5,6 +5,22 @@
 }) %>
 
 <main class="article-edit">
+    <div class="article-edit__mobile-control-area">
+      <div>
+        <% if (status !== 'published') { %>
+          <button class="button article-edit__publish" id="publish">Publish</button>
+        <% } %>
+  
+        <% if (status === 'published') { %>
+          <button class="button article-edit__publish" id="publish">Update</button>
+        <% } %>
+  
+        <% if (status === 'draft' || status !== 'published') { %>
+          <button class="button article-edit__save" id="save" type="submit">save as draft</button>
+        <% } %>
+    </div>
+      <button id="mobile-article-options" class="article-edit__options"><i class="fa-solid fa-gear"></i></button>
+    </div>
     <div class="article-edit__editor-area">
       <input class="article-edit__input article-edit__title" id="article-title" placeholder="" type="text"value="<%=title%>" />
       <div class="article-edit__editor-wrapper">

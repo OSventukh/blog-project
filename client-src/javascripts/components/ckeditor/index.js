@@ -128,4 +128,25 @@ function initCKEditor() {
     });
 }
 
+function openArticleMobileMenu() {
+  const optionsMenuBtn = document.getElementById('mobile-article-options');
+  const optionsMenu = document.querySelector('.article-edit__control-area');
+
+  optionsMenuBtn.addEventListener('click', (event) => {
+    event.stopPropagation();
+
+    optionsMenu.classList.toggle('active');
+  });
+
+  window.addEventListener('click', (event) => {
+    event.stopPropagation();
+    if (!event.target.matches('.article-edit__control-area') && !event.target.matches('.article-edit__control-area > *')) {
+      if (optionsMenu.classList.contains('active')) {
+
+        optionsMenu.classList.remove('active');
+      }
+    }
+  });
+}
+openArticleMobileMenu();
 initCKEditor();

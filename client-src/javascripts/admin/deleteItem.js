@@ -68,8 +68,7 @@ export function deleteMultipleItems(url, selector, warningMessage) {
   });
 
   document
-    .getElementById('delete-multiple-items')
-    .addEventListener('click', async () => {
+    .getElementById('delete-multiple-items')?.addEventListener('click', async () => {
       if (checkedItems.length > 0) {
         confirmDeleting(url, checkedItems, `${warningMessage} (${checkedItems.length})`);
       }

@@ -19,14 +19,5 @@ module.exports = {
   output: {
     filename: '[name].js',
     path: path.resolve(__dirname, 'public', 'js'),
-  },
-  module: {
-    rules: [
-      { test: /\.css$/, use: 'css-loader' },
-      {
-        test: /\.svg/,
-        type: 'asset/resource'
-      }
-    ],
   }
 };

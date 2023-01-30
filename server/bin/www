@@ -4,6 +4,8 @@
  * Module dependencies.
  */
 
+const fs = require('fs');
+const path = require('path');
 const { createServer } = require('http');
 
 const debug = require('debug')('createServer');
@@ -83,7 +85,12 @@ function onError(error) {
 sequelize
   .sync()
   .then(() => {
-    server.listen(port);
+    server.listen(port, () => {
+      const avatarsFolderPath = path.join(process.cwd(), 'media', 'avatars');
+      fs.mkdir(avatarsFolderPath, { recursive: true }, (error) => console.log(error));
+      const imagesFolderPath = path.join(process.cwd(), 'media', 'images');
+      fs.mkdir(imagesFolderPath, { recursive: true }, (error) => console.log(error));
+    });
     const io = require('../socket').init(server);
 
     let registeredUser = [];
