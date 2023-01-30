@@ -1,11 +1,11 @@
 import {deleteItem, deleteMultipleItems} from './deleteItem';
 
 // Deleting articles
-deleteItem('/post/delete', '.articles__item-delete');
+deleteItem('/post/delete', '.articles__item-delete', 'Are you sure you want to delete this article?');
 
-deleteMultipleItems('/post/delete', '.articles__check');
+deleteMultipleItems('/post/delete', '.articles__check', 'Are you sure you want to delete this articles?');
 
 // Deleting users
-deleteItem('/post/delete', '.users__item-delete');
+deleteItem('/admin/delete-users', '.users__item-delete', 'Are you sure you want to delete this user?');
 
-deleteMultipleItems('/post/delete', '.users__check');
+deleteMultipleItems('/admin/delete-users', '.users__check', 'Are you sure you want to delete this users?');

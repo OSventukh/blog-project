@@ -1,4 +1,6 @@
 const { User } = require('../../models');
+const { Op } = require('sequelize');
+
 const hashedPassword = require('../../utils/hashPass')
 
 exports.createAdmin = async (req, res, next) => {
@@ -29,3 +31,29 @@ exports.getAllUsers = (req, res, next) => {
     });
   });
 };
+
+exports.postDeleteUsers = (req, res, next) => {
+  const { values } = req.body;
+  console.log(req.body)
+  if (!values || values.length === 0) {
+    return res.status(404).json({
+      message: 'Post id is undefined',
+    });
+  }
+
+  User.destroy({
+    where: {
+      id: {
+        [Op.in]: values
+      }
+    }
+  })
+  .then(() => {
+    res.status(200).json({
+      message: 'User was successfully deleted'
+    })
+  })
+  .catch((error) => res.status(500).json({
+    message: 'User deleting failed',
+  }))
+}

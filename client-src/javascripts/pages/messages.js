@@ -7,7 +7,6 @@ function messenger() {
   const messagesListField = document.querySelector('.messenger__messages');
   const mobileToggle = document.querySelector('.messenger__user-mobile');
   const userListMenu = document.querySelector('.messenger__users');
-  const userSearchInput = document.getElementById('messenger__search-input');
   let receiverId;
   
   const documentHeight = () => {
@@ -33,21 +32,6 @@ function messenger() {
       <p2 style="margin:auto">Choose user for conversation</p2>
     `
     messageForm.style.display = 'none';
-  }
-
-  const filterUser = () => {
-
-    if (users && users.length > 0) {
-
-      const allUsers = users;
-
-      userSearchInput.addEventListener('input', (event) => {
-        const filteredUsers = [...allUsers].filter((user) => {
-          return user.querySelector('.messenger__user-nickname').textContent.includes(event.target.value);
-        });
-        users.parentNode.replaceChild(filteredUsers)
-      })
-    }
   }
 
   const loadMessages = async (userId) => {
@@ -195,7 +179,6 @@ function messenger() {
   });
 
   showOnlineUsers();
-  filterUser();
   initLatestConversation();
 
 }

@@ -9,31 +9,31 @@
         </div>
         <div class="user-profile__left">
           <h2 class="user-profile__title"><%= nickname %></h2>
-      <div class="user-profile__item">Role: <%= role %></div>
-      <div class="user-profile__item">Email: <%= email %></div>
+          <div class="user-profile__item">Role: <%= role %></div>
+          <div class="user-profile__item">Email: <%= email %></div>
 
-      <% if (name) { %> 
-        <div class="user-profile__item"></div>Name: <%= name %></div>
-      <%}%>
+          <% if (name) { %> 
+            <div class="user-profile__item"></div>Name: <%= name %></div>
+          <%}%>
 
-      <% if (birthday) { %> 
-        <div class="user-profile__item">Birthday: <%= birthday %></div>
-      <%}%>
+          <% if (birthday) { %> 
+            <div class="user-profile__item">Birthday: <%= birthday %></div>
+          <%}%>
 
-      <% if (country) { %> 
-        <div class="user-profile__item">Country: <%= country %></div>
-      <%}%>
+          <% if (country) { %> 
+            <div class="user-profile__item">Country: <%= country %></div>
+          <%}%>
 
-      <% if (city) { %> 
-        <div class="user-profile__item">City: <%= city %></div>
-      <%}%>
-      
-        </div>
-        <div class="user-profile__right">
-          <div class="user-profile__avatar">
-            <img src="/<%=loggedUser.avatar %>" alt="<%=loggedUser.nickname %>">
-
+          <% if (city) { %> 
+            <div class="user-profile__item">City: <%= city %></div>
+          <%}%>
+          <div class="user-profile__right">
+            <div class="user-profile__avatar">
+              <img src="/<%=loggedUser.avatar %>" alt="<%=loggedUser.nickname %>">
+  
+            </div>
           </div>
+      
         </div>
       </div>
       

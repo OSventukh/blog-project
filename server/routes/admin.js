@@ -50,6 +50,8 @@ router.get(
   usersControllers.getAllUsers
 );
 
+router.post('/delete-users', accessUsersMiddleware(['admin']), usersControllers.postDeleteUsers)
+
 router.get(
   '/media',
   accessUsersMiddleware(['admin']),
