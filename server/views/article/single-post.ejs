@@ -30,7 +30,7 @@
       <% if (comments.length > 0) { %> 
         <% for (const comment of comments) { %> 
           <div class="comment">
-            <% if (isAuthenticated && loggedUser.id === comment.author.id || loggedUser.status === 'admin') { %> 
+            <% if (isAuthenticated && (loggedUser.id === comment.author.id || loggedUser.role === 'admin')) { %> 
             <div class="comment__options">
               <button class="comment__options-btn">
                 <i class="fa-solid fa-ellipsis-vertical"></i>
