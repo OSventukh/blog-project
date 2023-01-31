@@ -536,8 +536,8 @@ footer {
 .comment__user-avatar {
   grid-column: 1 / 2;
   grid-row: 1 / 3;
-  width: 8rem;
-  height: 8rem;
+  width: 6rem;
+  height: 6rem;
   border-radius: 50%;
   display: flex;
   justify-content: center;
