@@ -1,11 +1,3 @@
-/*
- * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
- * This devtool is neither made for production nor for readable output files.
- * It uses "eval()" calls to create a separate source file in the browser devtools.
- * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
- * or disable the default devtool with "devtool: false".
- * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
- */
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
@@ -16,7 +8,94 @@
   \***************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ auth)\n/* harmony export */ });\n/* harmony import */ var _ui_modal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../ui/modal */ \"./client-src/javascripts/ui/modal.js\");\n/* harmony import */ var _utils_fetch__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/fetch */ \"./client-src/javascripts/utils/fetch.js\");\n/* harmony import */ var _ui_notification__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../ui/notification */ \"./client-src/javascripts/ui/notification.js\");\n\r\n\r\n\r\n\r\nfunction auth() {\r\n  const [modalShow] = (0,_ui_modal__WEBPACK_IMPORTED_MODULE_0__[\"default\"])();\r\n  const [notificationShow, notificationClose] = (0,_ui_notification__WEBPACK_IMPORTED_MODULE_2__[\"default\"])();\r\n\r\n  const loginButton = document.getElementById('login-button');\r\n\r\n  function loginHandler(redirect = false) {\r\n    let loginForm = `\r\n    <form class=\"login-form\" id=\"login-form\" action=\"/login\" method=\"post\">\r\n      <div class=\"form-control\">\r\n          <label for=\"email\">Login:</label>\r\n          <div class=\"input-wrap\">\r\n            <input class=\"login-form__input\" type=\"email\" name=\"email\" id=\"email\" autocomplete=\"email\" required>\r\n            <i class=\"fa-solid fa-envelope\"></i>\r\n          </div>\r\n        </div>\r\n        <div class=\"form-control\">\r\n          <label for=\"password\">Password:</label>\r\n          <div class=\"input-wrap\">\r\n            <input class=\"login-form__input\" type=\"password\" name=\"password\" id=\"password\" autocomplete=\"current-password\" required>\r\n            <i class=\"fa-solid fa-key\"></i>\r\n          </div>\r\n        </div>\r\n        <div class=\"form-buttons login-form__buttons\">\r\n          <a class=\"login-form__reset\" href=\"/reset\">Forgot Password</a>\r\n          <button class=\"button login-form__submit\" type=\"submit\">Login</button>\r\n        </div>\r\n      </form>\r\n  `;\r\n    modalShow(loginForm);\r\n\r\n    if (loginForm) {\r\n      const form = document.getElementById('login-form');\r\n      form.addEventListener('submit', async (event) => {\r\n        event.preventDefault();\r\n\r\n        const email = document.getElementById('email').value;\r\n        const password = document.getElementById('password').value;\r\n\r\n        try {\r\n          const response = await (0,_utils_fetch__WEBPACK_IMPORTED_MODULE_1__.postData)('/login', {\r\n            email: email,\r\n            password: password,\r\n          });\r\n\r\n          if (redirect && typeof redirect === 'string') {\r\n            return (location = redirect);\r\n          }\r\n          return location.reload();\r\n        } catch (error) {\r\n          notificationShow(\r\n            error.message,\r\n            '#login-form',\r\n            'error',\r\n            false,\r\n            'afterbegin'\r\n          );\r\n        }\r\n      });\r\n    }\r\n  }\r\n\r\n  if (loginButton) {\r\n    loginButton.addEventListener('click', (event) => {\r\n      loginHandler();\r\n    });\r\n  }\r\n\r\n  if (location.search === '?login') {\r\n    loginHandler('/');\r\n  }\r\n\r\n  if (location.search === '?confirm-email') {\r\n    modalShow('A confirmation link has been sent to your email');\r\n  }\r\n}\r\n\n\n//# sourceURL=webpack://blog-project/./client-src/javascripts/components/auth.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ auth)
+/* harmony export */ });
+/* harmony import */ var _ui_modal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../ui/modal */ "./client-src/javascripts/ui/modal.js");
+/* harmony import */ var _utils_fetch__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/fetch */ "./client-src/javascripts/utils/fetch.js");
+/* harmony import */ var _ui_notification__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../ui/notification */ "./client-src/javascripts/ui/notification.js");
+
+
+
+
+function auth() {
+  const [modalShow] = (0,_ui_modal__WEBPACK_IMPORTED_MODULE_0__["default"])();
+  const [notificationShow, notificationClose] = (0,_ui_notification__WEBPACK_IMPORTED_MODULE_2__["default"])();
+
+  const loginButton = document.getElementById('login-button');
+
+  function loginHandler(redirect = false) {
+    let loginForm = `
+    <form class="login-form" id="login-form" action="/login" method="post">
+      <div class="form-control">
+          <label for="email">Login:</label>
+          <div class="input-wrap">
+            <input class="login-form__input" type="email" name="email" id="email" autocomplete="email" required>
+            <i class="fa-solid fa-envelope"></i>
+          </div>
+        </div>
+        <div class="form-control">
+          <label for="password">Password:</label>
+          <div class="input-wrap">
+            <input class="login-form__input" type="password" name="password" id="password" autocomplete="current-password" required>
+            <i class="fa-solid fa-key"></i>
+          </div>
+        </div>
+        <div class="form-buttons login-form__buttons">
+          <a class="login-form__reset" href="/reset">Forgot Password</a>
+          <button class="button login-form__submit" type="submit">Login</button>
+        </div>
+      </form>
+  `;
+    modalShow(loginForm);
+
+    if (loginForm) {
+      const form = document.getElementById('login-form');
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        try {
+          const response = await (0,_utils_fetch__WEBPACK_IMPORTED_MODULE_1__.postData)('/login', {
+            email: email,
+            password: password,
+          });
+
+          if (redirect && typeof redirect === 'string') {
+            return (location = redirect);
+          }
+          return location.reload();
+        } catch (error) {
+          notificationShow(
+            error.message,
+            '#login-form',
+            'error',
+            false,
+            'afterbegin'
+          );
+        }
+      });
+    }
+  }
+
+  if (loginButton) {
+    loginButton.addEventListener('click', (event) => {
+      loginHandler();
+    });
+  }
+
+  if (location.search === '?login') {
+    loginHandler('/');
+  }
+
+  if (location.search === '?confirm-email') {
+    modalShow('A confirmation link has been sent to your email');
+  }
+}
+
 
 /***/ }),
 
@@ -26,17 +105,15 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
   \*****************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ footer)\n/* harmony export */ });\nfunction footer() {\r\n  const yearSpan = document.querySelector('span.year');\r\n  const currentYear = new Date().getFullYear();\r\n  yearSpan.textContent = currentYear;\r\n}\n\n//# sourceURL=webpack://blog-project/./client-src/javascripts/components/footer.js?");
-
-/***/ }),
-
-/***/ "./client-src/javascripts/index.js":
-/*!*****************************************!*\
-  !*** ./client-src/javascripts/index.js ***!
-  \*****************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _ui_nav__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ui/nav */ \"./client-src/javascripts/ui/nav.js\");\n/* harmony import */ var _ui_pagination__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ui/pagination */ \"./client-src/javascripts/ui/pagination.js\");\n/* harmony import */ var _components_auth__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/auth */ \"./client-src/javascripts/components/auth.js\");\n/* harmony import */ var _components_footer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/footer */ \"./client-src/javascripts/components/footer.js\");\n\r\n\r\n\r\n\r\n\r\n(0,_ui_nav__WEBPACK_IMPORTED_MODULE_0__[\"default\"])();\r\n(0,_ui_pagination__WEBPACK_IMPORTED_MODULE_1__[\"default\"])();\r\n(0,_components_auth__WEBPACK_IMPORTED_MODULE_2__[\"default\"])();\r\n(0,_components_footer__WEBPACK_IMPORTED_MODULE_3__[\"default\"])();\r\n\n\n//# sourceURL=webpack://blog-project/./client-src/javascripts/index.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ footer)
+/* harmony export */ });
+function footer() {
+  const yearSpan = document.querySelector('span.year');
+  const currentYear = new Date().getFullYear();
+  yearSpan.textContent = currentYear;
+}
 
 /***/ }),
 
@@ -46,7 +123,68 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _ui_
   \********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ modal)\n/* harmony export */ });\nfunction modal() {\r\n  const backdrop = document.querySelector('.backdrop');\r\n  const modalWindow = document.querySelector('.modal');\r\n  const modalCloseBtn = modalWindow.querySelector('.modal__close');\r\n  const modalContent = modalWindow.querySelector('.modal__content');\r\n  const cancelBtn = modalWindow.querySelector('#cancel');\r\n\r\n  const modalShow = (content) => {\r\n    const mobileMenu = document.querySelector('.navigation__list');\r\n\r\n    if (mobileMenu && mobileMenu.classList.contains('active')) {\r\n      mobileMenu.classList.remove('active');\r\n      backdrop.classList.remove('show-flex');\r\n    }\r\n\r\n    if (modalWindow && modalWindow.classList.contains('show')) {\r\n      modalWindow.classList.remove('show');\r\n      backdrop.classList.remove('show-flex', 'full');\r\n    }\r\n\r\n    backdrop.classList.add('show-flex');\r\n    backdrop.classList.add('full');\r\n    modalWindow.classList.add('show');\r\n    modalWindow.focus();\r\n    if (document.body.style.overflow === 'hidden') {\r\n      document.body.style.overflow = '';\r\n    } else {\r\n      document.body.style.overflow = 'hidden';\r\n    }\r\n\r\n    modalContent.innerHTML = content;\r\n  };\r\n\r\n  const modalClose = () => {\r\n    modalWindow.classList.remove('show');\r\n    backdrop.classList.remove('show-flex', 'full');\r\n    document.body.style.overflow = '';\r\n  };\r\n\r\n  if (backdrop) {\r\n    backdrop.addEventListener('click', (event) => {\r\n      modalClose();\r\n    });\r\n  }\r\n\r\n  modalCloseBtn.addEventListener('click', (event) => {\r\n    modalClose();\r\n  });\r\n\r\n  if (cancelBtn) {\r\n    cancelBtn.addEventListener('click', (event) => {\r\n      closeModal();\r\n    });\r\n  }\r\n\r\n  return [modalShow, modalClose, modalWindow];\r\n}\r\n\n\n//# sourceURL=webpack://blog-project/./client-src/javascripts/ui/modal.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ modal)
+/* harmony export */ });
+function modal() {
+  const backdrop = document.querySelector('.backdrop');
+  const modalWindow = document.querySelector('.modal');
+  const modalCloseBtn = modalWindow.querySelector('.modal__close');
+  const modalContent = modalWindow.querySelector('.modal__content');
+  const cancelBtn = modalWindow.querySelector('#cancel');
+
+  const modalShow = (content) => {
+    const mobileMenu = document.querySelector('.navigation__list');
+
+    if (mobileMenu && mobileMenu.classList.contains('active')) {
+      mobileMenu.classList.remove('active');
+      backdrop.classList.remove('show-flex');
+    }
+
+    if (modalWindow && modalWindow.classList.contains('show')) {
+      modalWindow.classList.remove('show');
+      backdrop.classList.remove('show-flex', 'full');
+    }
+
+    backdrop.classList.add('show-flex');
+    backdrop.classList.add('full');
+    modalWindow.classList.add('show');
+    modalWindow.focus();
+    if (document.body.style.overflow === 'hidden') {
+      document.body.style.overflow = '';
+    } else {
+      document.body.style.overflow = 'hidden';
+    }
+
+    modalContent.innerHTML = content;
+  };
+
+  const modalClose = () => {
+    modalWindow.classList.remove('show');
+    backdrop.classList.remove('show-flex', 'full');
+    document.body.style.overflow = '';
+  };
+
+  if (backdrop) {
+    backdrop.addEventListener('click', (event) => {
+      modalClose();
+    });
+  }
+
+  modalCloseBtn.addEventListener('click', (event) => {
+    modalClose();
+  });
+
+  if (cancelBtn) {
+    cancelBtn.addEventListener('click', (event) => {
+      closeModal();
+    });
+  }
+
+  return [modalShow, modalClose, modalWindow];
+}
+
 
 /***/ }),
 
@@ -56,7 +194,68 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
   \******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ navigation)\n/* harmony export */ });\nfunction navigation() {\r\n  const navButton = document.querySelector('.navigation__mobile-menu-btn');\r\n  const sideMenu = document.querySelector('.navigation__menu ul');\r\n  const backDrop = document.querySelector('.backdrop');\r\n  const loggedUser = document.getElementById('loggedUserAvatar');\r\n\r\n  navButton.addEventListener('click', (e) => {\r\n    if (document.querySelector('.modal').classList.contains('show')) {\r\n      document.querySelector('.modal').classList.remove('show');\r\n      sideMenu.classList.add('active');\r\n    } else {\r\n      backDrop.classList.toggle('show-flex');\r\n      sideMenu.classList.toggle('active');\r\n    }\r\n\r\n    if (document.body.style.overflow === 'hidden') {\r\n      document.body.style.overflow = '';\r\n    } else {\r\n      document.body.style.overflow = 'hidden';\r\n    }\r\n  });\r\n\r\n  if (backDrop) {\r\n    backDrop.addEventListener('click', (e) => {\r\n      backDrop.classList.remove('show-flex');\r\n      sideMenu.classList.remove('active');\r\n      document.body.style.overflow = '';\r\n    });\r\n  }\r\n\r\n  let windowWidth = window.innerWidth;\r\n  window.addEventListener('resize', (e) => {\r\n    if (window.innerWidth !== windowWidth) {\r\n      if (!backDrop.classList.contains('full')) {\r\n        backDrop.classList.remove('show-flex');\r\n\r\n      }\r\n      sideMenu.classList.remove('active');\r\n      document.body.style.overflow = '';\r\n    }\r\n  });\r\n\r\n\r\n  if (loggedUser) {\r\n    loggedUser.addEventListener('click', (event) => {\r\n      loggedUser.classList.toggle('active');\r\n    });\r\n\r\n    window.addEventListener('click', (event) => {\r\n      if (!event.target.matches('#loggedUserAvatar img')) {\r\n        if (loggedUser.classList.contains('active')) {\r\n          loggedUser.classList.remove('active');\r\n        }\r\n      }\r\n    });\r\n  }\r\n}\r\n\n\n//# sourceURL=webpack://blog-project/./client-src/javascripts/ui/nav.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ navigation)
+/* harmony export */ });
+function navigation() {
+  const navButton = document.querySelector('.navigation__mobile-menu-btn');
+  const sideMenu = document.querySelector('.navigation__menu ul');
+  const backDrop = document.querySelector('.backdrop');
+  const loggedUser = document.getElementById('loggedUserAvatar');
+
+  navButton.addEventListener('click', (e) => {
+    if (document.querySelector('.modal').classList.contains('show')) {
+      document.querySelector('.modal').classList.remove('show');
+      sideMenu.classList.add('active');
+    } else {
+      backDrop.classList.toggle('show-flex');
+      sideMenu.classList.toggle('active');
+    }
+
+    if (document.body.style.overflow === 'hidden') {
+      document.body.style.overflow = '';
+    } else {
+      document.body.style.overflow = 'hidden';
+    }
+  });
+
+  if (backDrop) {
+    backDrop.addEventListener('click', (e) => {
+      backDrop.classList.remove('show-flex');
+      sideMenu.classList.remove('active');
+      document.body.style.overflow = '';
+    });
+  }
+
+  let windowWidth = window.innerWidth;
+  window.addEventListener('resize', (e) => {
+    if (window.innerWidth !== windowWidth) {
+      if (!backDrop.classList.contains('full')) {
+        backDrop.classList.remove('show-flex');
+
+      }
+      sideMenu.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  });
+
+
+  if (loggedUser) {
+    loggedUser.addEventListener('click', (event) => {
+      loggedUser.classList.toggle('active');
+    });
+
+    window.addEventListener('click', (event) => {
+      if (!event.target.matches('#loggedUserAvatar img')) {
+        if (loggedUser.classList.contains('active')) {
+          loggedUser.classList.remove('active');
+        }
+      }
+    });
+  }
+}
+
 
 /***/ }),
 
@@ -66,7 +265,50 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
   \***************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ notification)\n/* harmony export */ });\nfunction notification() {\r\n  function notificationShow(\r\n    message,\r\n    selector,\r\n    status='error',\r\n    withCloseBtn = false,\r\n    methodInserts = 'beforebegin'\r\n  ) {\r\n    const notificationTemplate = `\r\n    <div class=\"message__alert ${status}\">\r\n      ${ withCloseBtn ? '<button class=\"message__alert-close\"><i class=\"fa-solid fa-xmark\"></i></button>' : ''}\r\n      <div class=\"message__alert-content\">\r\n        ${message}\r\n      </div>\r\n    </div>\r\n  `;\r\n\r\n    const existError = document.querySelector('.message__alert');\r\n\r\n    if (existError) {\r\n      existError.remove();\r\n    }\r\n\r\n    document.querySelector(selector).insertAdjacentHTML(methodInserts, notificationTemplate);\r\n    \r\n    \r\n    const closeBtn = document.querySelector('.message__alert-close');\r\n\r\n    if (closeBtn) {\r\n      closeBtn.addEventListener('click', closeNotification);\r\n    }\r\n  }\r\n\r\n  function notificationClose() {\r\n    document.querySelector('.message__alert').remove();\r\n  }\r\n\r\n  return [notificationShow, notificationClose];\r\n}\r\n\n\n//# sourceURL=webpack://blog-project/./client-src/javascripts/ui/notification.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ notification)
+/* harmony export */ });
+function notification() {
+  function notificationShow(
+    message,
+    selector,
+    status='error',
+    withCloseBtn = false,
+    methodInserts = 'beforebegin'
+  ) {
+    const notificationTemplate = `
+    <div class="message__alert ${status}">
+      ${ withCloseBtn ? '<button class="message__alert-close"><i class="fa-solid fa-xmark"></i></button>' : ''}
+      <div class="message__alert-content">
+        ${message}
+      </div>
+    </div>
+  `;
+
+    const existError = document.querySelector('.message__alert');
+
+    if (existError) {
+      existError.remove();
+    }
+
+    document.querySelector(selector).insertAdjacentHTML(methodInserts, notificationTemplate);
+    
+    
+    const closeBtn = document.querySelector('.message__alert-close');
+
+    if (closeBtn) {
+      closeBtn.addEventListener('click', closeNotification);
+    }
+  }
+
+  function notificationClose() {
+    document.querySelector('.message__alert').remove();
+  }
+
+  return [notificationShow, notificationClose];
+}
+
 
 /***/ }),
 
@@ -76,7 +318,48 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
   \*************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ pagination)\n/* harmony export */ });\nfunction pagination() {\r\n  const pages = document.querySelectorAll('.page');\r\n  const prev = document.querySelector('.prev');\r\n  const next = document.querySelector('.next');\r\n\r\n  pages.forEach((page, i) => {\r\n    page.addEventListener('click', (e) => {\r\n      e.preventDefault();\r\n      const searchParams = new URLSearchParams(window.location.search);\r\n      console.log(searchParams.get('page'));\r\n      searchParams.set('page', i + 1);\r\n      window.location.search = searchParams.toString();\r\n    });\r\n  });\r\n\r\n  if (prev) {\r\n    prev.addEventListener('click', (e) => {\r\n      console.log('prev');\r\n      e.preventDefault();\r\n      const searchParams = new URLSearchParams(window.location.search);\r\n      const currentPage = +searchParams.get('page');\r\n      searchParams.set('page', currentPage - 1);\r\n      window.location.search = searchParams.toString();\r\n    });\r\n  }\r\n\r\n  if (next) {\r\n    next.addEventListener('click', (e) => {\r\n      console.log('next');\r\n      e.preventDefault();\r\n      const searchParams = new URLSearchParams(window.location.search);\r\n      const currentPage = +searchParams.get('page');\r\n      searchParams.set('page', currentPage + 1);\r\n      window.location.search = searchParams.toString();\r\n    });\r\n  }\r\n}\r\n\n\n//# sourceURL=webpack://blog-project/./client-src/javascripts/ui/pagination.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ pagination)
+/* harmony export */ });
+function pagination() {
+  const pages = document.querySelectorAll('.page');
+  const prev = document.querySelector('.prev');
+  const next = document.querySelector('.next');
+
+  pages.forEach((page, i) => {
+    page.addEventListener('click', (e) => {
+      e.preventDefault();
+      const searchParams = new URLSearchParams(window.location.search);
+      console.log(searchParams.get('page'));
+      searchParams.set('page', i + 1);
+      window.location.search = searchParams.toString();
+    });
+  });
+
+  if (prev) {
+    prev.addEventListener('click', (e) => {
+      console.log('prev');
+      e.preventDefault();
+      const searchParams = new URLSearchParams(window.location.search);
+      const currentPage = +searchParams.get('page');
+      searchParams.set('page', currentPage - 1);
+      window.location.search = searchParams.toString();
+    });
+  }
+
+  if (next) {
+    next.addEventListener('click', (e) => {
+      console.log('next');
+      e.preventDefault();
+      const searchParams = new URLSearchParams(window.location.search);
+      const currentPage = +searchParams.get('page');
+      searchParams.set('page', currentPage + 1);
+      window.location.search = searchParams.toString();
+    });
+  }
+}
+
 
 /***/ }),
 
@@ -86,7 +369,43 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
   \***********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"getData\": () => (/* binding */ getData),\n/* harmony export */   \"postData\": () => (/* binding */ postData)\n/* harmony export */ });\nconst token = document\r\n  .querySelector('meta[name=\"csrf-token\"]')\r\n  .getAttribute('content');\r\n\r\nasync function getData(url) {\r\n  const res = await fetch(url);\r\n  const result = await res.json()\r\n  if (!res.ok) {\r\n    throw new Error(result.message || 'Something went wrong')\r\n  }\r\n  return result;\r\n}\r\n\r\nasync function postData(url, data, contentType) {\r\n  let res = await fetch(url, {\r\n    method: 'POST',\r\n    headers: {\r\n      'CSRF-Token': token,\r\n      'Content-Type': contentType || 'application/json',\r\n    },\r\n    body: contentType ? data : JSON.stringify(data),\r\n  });\r\n\r\n  const result = await res.json();\r\n\r\n  if (!res.ok) {\r\n    throw new Error(result.message || 'Something went wrong');\r\n  }\r\n\r\n  return result;\r\n}\r\n\n\n//# sourceURL=webpack://blog-project/./client-src/javascripts/utils/fetch.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "getData": () => (/* binding */ getData),
+/* harmony export */   "postData": () => (/* binding */ postData)
+/* harmony export */ });
+const token = document
+  .querySelector('meta[name="csrf-token"]')
+  .getAttribute('content');
+
+async function getData(url) {
+  const res = await fetch(url);
+  const result = await res.json()
+  if (!res.ok) {
+    throw new Error(result.message || 'Something went wrong')
+  }
+  return result;
+}
+
+async function postData(url, data, contentType) {
+  let res = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'CSRF-Token': token,
+      'Content-Type': contentType || 'application/json',
+    },
+    body: contentType ? data : JSON.stringify(data),
+  });
+
+  const result = await res.json();
+
+  if (!res.ok) {
+    throw new Error(result.message || 'Something went wrong');
+  }
+
+  return result;
+}
+
 
 /***/ })
 
@@ -146,11 +465,29 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /******/ 	})();
 /******/ 	
 /************************************************************************/
-/******/ 	
-/******/ 	// startup
-/******/ 	// Load entry module and return exports
-/******/ 	// This entry module can't be inlined because the eval devtool is used.
-/******/ 	var __webpack_exports__ = __webpack_require__("./client-src/javascripts/index.js");
-/******/ 	
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+(() => {
+/*!*****************************************!*\
+  !*** ./client-src/javascripts/index.js ***!
+  \*****************************************/
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ui_nav__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ui/nav */ "./client-src/javascripts/ui/nav.js");
+/* harmony import */ var _ui_pagination__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ui/pagination */ "./client-src/javascripts/ui/pagination.js");
+/* harmony import */ var _components_auth__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/auth */ "./client-src/javascripts/components/auth.js");
+/* harmony import */ var _components_footer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/footer */ "./client-src/javascripts/components/footer.js");
+
+
+
+
+
+(0,_ui_nav__WEBPACK_IMPORTED_MODULE_0__["default"])();
+(0,_ui_pagination__WEBPACK_IMPORTED_MODULE_1__["default"])();
+(0,_components_auth__WEBPACK_IMPORTED_MODULE_2__["default"])();
+(0,_components_footer__WEBPACK_IMPORTED_MODULE_3__["default"])();
+
+})();
+
 /******/ })()
 ;
+//# sourceMappingURL=index.js.map

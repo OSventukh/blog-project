@@ -1,24 +1,6 @@
-/*
- * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
- * This devtool is neither made for production nor for readable output files.
- * It uses "eval()" calls to create a separate source file in the browser devtools.
- * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
- * or disable the default devtool with "devtool: false".
- * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
- */
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
-
-/***/ "./client-src/javascripts/components/ckeditor/index.js":
-/*!*************************************************************!*\
-  !*** ./client-src/javascripts/components/ckeditor/index.js ***!
-  \*************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _utils_fetch_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../utils/fetch.js */ \"./client-src/javascripts/utils/fetch.js\");\n/* harmony import */ var _ui_modal_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../ui/modal.js */ \"./client-src/javascripts/ui/modal.js\");\n\r\n\r\nconst [modalShow, modalClose] = (0,_ui_modal_js__WEBPACK_IMPORTED_MODULE_1__[\"default\"])();\r\n\r\nasync function saveData(\r\n  editor,\r\n  inputs,\r\n  postStatus,\r\n  postId,\r\n  actionButtons,\r\n  event\r\n) {\r\n  const pressedButton = event.currentTarget;\r\n  if (event) {\r\n    pressedButton.disabled = true;\r\n  }\r\n\r\n  const [title, category, tags, slug] = inputs;\r\n\r\n  const contentValue = editor.getData();\r\n\r\n  const titleValue = title.value;\r\n  const categoryValue = category.value;\r\n  const tagsValue = tags.value;\r\n  const slugValue = slug.value;\r\n\r\n  const data = {\r\n    content: contentValue,\r\n    title: titleValue,\r\n    category: categoryValue,\r\n    tags: tagsValue,\r\n    slug: slugValue,\r\n    postId: postId,\r\n    postStatus: postStatus,\r\n  };\r\n\r\n  try {\r\n    const response = await (0,_utils_fetch_js__WEBPACK_IMPORTED_MODULE_0__.postData)('/add-post', data);\r\n    if (postStatus && postStatus === 'published') {\r\n      const [saveButton, publishButton] = actionButtons;\r\n\r\n      saveButton && saveButton.remove();\r\n      publishButton.textContent = 'update';\r\n    }\r\n\r\n    window.history.pushState({}, 'Article', `?id=${response.postId}`);\r\n  } catch (error) {\r\n    pressedButton.disabled = false;\r\n    modalShow(error.message);\r\n  }\r\n}\r\n\r\nasync function getPreviousContent(editor, postId) {\r\n  try {\r\n    const response = await (0,_utils_fetch_js__WEBPACK_IMPORTED_MODULE_0__.getData)(`/post-edit/${postId}`);\r\n    editor.setData(response.content);\r\n  } catch (error) {\r\n    modalShow(error.message);\r\n  }\r\n}\r\n\r\nfunction changeHandler(editor, inputs, actionButtons) {\r\n  const activeActionButtons = () => {\r\n    actionButtons.forEach((btn) => {\r\n      if (btn) {\r\n        btn.disabled = false;\r\n      }\r\n    });\r\n  };\r\n\r\n  editor.model.document.on('change:data', (evt, data) => {\r\n    activeActionButtons();\r\n  });\r\n\r\n  inputs.forEach((input) => {\r\n    input.addEventListener('input', activeActionButtons);\r\n  });\r\n}\r\n\r\nfunction initCKEditor() {\r\n  const titlePlaceholder = 'Type your title';\r\n  const contentPlaceholder = 'Type your content';\r\n\r\n  const saveButton = document.getElementById('save');\r\n  const publishButton = document.getElementById('publish');\r\n  const token = document\r\n    .querySelector('meta[name=\"csrf-token\"]')\r\n    .getAttribute('content');\r\n  const postId = document.querySelector('input[name=\"postId\"]').value;\r\n  const categoryId = document.querySelector('input[name=\"categoryId\"]').value;\r\n\r\n  const title = document.getElementById('article-title');\r\n  const category = document.getElementById('article-category');\r\n  const tags = document.getElementById('article-tags');\r\n  const slug = document.getElementById('article-slug');\r\n\r\n  title.placeholder = titlePlaceholder;\r\n  BalloonBlockEditor.create(document.querySelector('#editor'), {\r\n    licenseKey: '',\r\n    simpleUpload: {\r\n      uploadUrl: '/editor-upload-image',\r\n\r\n      // Enable the XMLHttpRequest.withCredentials property.\r\n      withCredentials: true,\r\n\r\n      // Headers sent along with the XMLHttpRequest to the upload server.\r\n      headers: {\r\n        'CSRF-Token': token,\r\n      },\r\n    },\r\n    placeholder: contentPlaceholder,\r\n  })\r\n    .then(async (editor) => {\r\n      window.editor = editor;\r\n\r\n      postId && (await getPreviousContent(editor, postId));\r\n\r\n      const inputs = [title, category, tags, slug];\r\n      const actionButtons = [saveButton, publishButton];\r\n      changeHandler(editor, inputs, actionButtons);\r\n\r\n      publishButton.addEventListener('click', async (event) => {\r\n        saveData(editor, inputs, 'published', postId, actionButtons, event);\r\n      });\r\n    })\r\n    .catch((error) => {\r\n      console.error(error);\r\n    });\r\n}\r\n\r\nfunction openArticleMobileMenu() {\r\n  const optionsMenuBtn = document.getElementById('mobile-article-options');\r\n  const optionsMenu = document.querySelector('.article-edit__control-area');\r\n\r\n  optionsMenuBtn.addEventListener('click', (event) => {\r\n    event.stopPropagation();\r\n\r\n    optionsMenu.classList.toggle('active');\r\n  });\r\n\r\n  window.addEventListener('click', (event) => {\r\n    event.stopPropagation();\r\n    if (!event.target.matches('.article-edit__control-area') && !event.target.matches('.article-edit__control-area > *')) {\r\n      if (optionsMenu.classList.contains('active')) {\r\n\r\n        optionsMenu.classList.remove('active');\r\n      }\r\n    }\r\n  });\r\n}\r\nopenArticleMobileMenu();\r\ninitCKEditor();\r\n\n\n//# sourceURL=webpack://blog-project/./client-src/javascripts/components/ckeditor/index.js?");
-
-/***/ }),
 
 /***/ "./client-src/javascripts/ui/modal.js":
 /*!********************************************!*\
@@ -26,7 +8,68 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _uti
   \********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ modal)\n/* harmony export */ });\nfunction modal() {\r\n  const backdrop = document.querySelector('.backdrop');\r\n  const modalWindow = document.querySelector('.modal');\r\n  const modalCloseBtn = modalWindow.querySelector('.modal__close');\r\n  const modalContent = modalWindow.querySelector('.modal__content');\r\n  const cancelBtn = modalWindow.querySelector('#cancel');\r\n\r\n  const modalShow = (content) => {\r\n    const mobileMenu = document.querySelector('.navigation__list');\r\n\r\n    if (mobileMenu && mobileMenu.classList.contains('active')) {\r\n      mobileMenu.classList.remove('active');\r\n      backdrop.classList.remove('show-flex');\r\n    }\r\n\r\n    if (modalWindow && modalWindow.classList.contains('show')) {\r\n      modalWindow.classList.remove('show');\r\n      backdrop.classList.remove('show-flex', 'full');\r\n    }\r\n\r\n    backdrop.classList.add('show-flex');\r\n    backdrop.classList.add('full');\r\n    modalWindow.classList.add('show');\r\n    modalWindow.focus();\r\n    if (document.body.style.overflow === 'hidden') {\r\n      document.body.style.overflow = '';\r\n    } else {\r\n      document.body.style.overflow = 'hidden';\r\n    }\r\n\r\n    modalContent.innerHTML = content;\r\n  };\r\n\r\n  const modalClose = () => {\r\n    modalWindow.classList.remove('show');\r\n    backdrop.classList.remove('show-flex', 'full');\r\n    document.body.style.overflow = '';\r\n  };\r\n\r\n  if (backdrop) {\r\n    backdrop.addEventListener('click', (event) => {\r\n      modalClose();\r\n    });\r\n  }\r\n\r\n  modalCloseBtn.addEventListener('click', (event) => {\r\n    modalClose();\r\n  });\r\n\r\n  if (cancelBtn) {\r\n    cancelBtn.addEventListener('click', (event) => {\r\n      closeModal();\r\n    });\r\n  }\r\n\r\n  return [modalShow, modalClose, modalWindow];\r\n}\r\n\n\n//# sourceURL=webpack://blog-project/./client-src/javascripts/ui/modal.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ modal)
+/* harmony export */ });
+function modal() {
+  const backdrop = document.querySelector('.backdrop');
+  const modalWindow = document.querySelector('.modal');
+  const modalCloseBtn = modalWindow.querySelector('.modal__close');
+  const modalContent = modalWindow.querySelector('.modal__content');
+  const cancelBtn = modalWindow.querySelector('#cancel');
+
+  const modalShow = (content) => {
+    const mobileMenu = document.querySelector('.navigation__list');
+
+    if (mobileMenu && mobileMenu.classList.contains('active')) {
+      mobileMenu.classList.remove('active');
+      backdrop.classList.remove('show-flex');
+    }
+
+    if (modalWindow && modalWindow.classList.contains('show')) {
+      modalWindow.classList.remove('show');
+      backdrop.classList.remove('show-flex', 'full');
+    }
+
+    backdrop.classList.add('show-flex');
+    backdrop.classList.add('full');
+    modalWindow.classList.add('show');
+    modalWindow.focus();
+    if (document.body.style.overflow === 'hidden') {
+      document.body.style.overflow = '';
+    } else {
+      document.body.style.overflow = 'hidden';
+    }
+
+    modalContent.innerHTML = content;
+  };
+
+  const modalClose = () => {
+    modalWindow.classList.remove('show');
+    backdrop.classList.remove('show-flex', 'full');
+    document.body.style.overflow = '';
+  };
+
+  if (backdrop) {
+    backdrop.addEventListener('click', (event) => {
+      modalClose();
+    });
+  }
+
+  modalCloseBtn.addEventListener('click', (event) => {
+    modalClose();
+  });
+
+  if (cancelBtn) {
+    cancelBtn.addEventListener('click', (event) => {
+      closeModal();
+    });
+  }
+
+  return [modalShow, modalClose, modalWindow];
+}
+
 
 /***/ }),
 
@@ -36,7 +79,43 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
   \***********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"getData\": () => (/* binding */ getData),\n/* harmony export */   \"postData\": () => (/* binding */ postData)\n/* harmony export */ });\nconst token = document\r\n  .querySelector('meta[name=\"csrf-token\"]')\r\n  .getAttribute('content');\r\n\r\nasync function getData(url) {\r\n  const res = await fetch(url);\r\n  const result = await res.json()\r\n  if (!res.ok) {\r\n    throw new Error(result.message || 'Something went wrong')\r\n  }\r\n  return result;\r\n}\r\n\r\nasync function postData(url, data, contentType) {\r\n  let res = await fetch(url, {\r\n    method: 'POST',\r\n    headers: {\r\n      'CSRF-Token': token,\r\n      'Content-Type': contentType || 'application/json',\r\n    },\r\n    body: contentType ? data : JSON.stringify(data),\r\n  });\r\n\r\n  const result = await res.json();\r\n\r\n  if (!res.ok) {\r\n    throw new Error(result.message || 'Something went wrong');\r\n  }\r\n\r\n  return result;\r\n}\r\n\n\n//# sourceURL=webpack://blog-project/./client-src/javascripts/utils/fetch.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "getData": () => (/* binding */ getData),
+/* harmony export */   "postData": () => (/* binding */ postData)
+/* harmony export */ });
+const token = document
+  .querySelector('meta[name="csrf-token"]')
+  .getAttribute('content');
+
+async function getData(url) {
+  const res = await fetch(url);
+  const result = await res.json()
+  if (!res.ok) {
+    throw new Error(result.message || 'Something went wrong')
+  }
+  return result;
+}
+
+async function postData(url, data, contentType) {
+  let res = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'CSRF-Token': token,
+      'Content-Type': contentType || 'application/json',
+    },
+    body: contentType ? data : JSON.stringify(data),
+  });
+
+  const result = await res.json();
+
+  if (!res.ok) {
+    throw new Error(result.message || 'Something went wrong');
+  }
+
+  return result;
+}
+
 
 /***/ })
 
@@ -96,11 +175,170 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /******/ 	})();
 /******/ 	
 /************************************************************************/
-/******/ 	
-/******/ 	// startup
-/******/ 	// Load entry module and return exports
-/******/ 	// This entry module can't be inlined because the eval devtool is used.
-/******/ 	var __webpack_exports__ = __webpack_require__("./client-src/javascripts/components/ckeditor/index.js");
-/******/ 	
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+(() => {
+/*!*************************************************************!*\
+  !*** ./client-src/javascripts/components/ckeditor/index.js ***!
+  \*************************************************************/
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _utils_fetch_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../utils/fetch.js */ "./client-src/javascripts/utils/fetch.js");
+/* harmony import */ var _ui_modal_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../ui/modal.js */ "./client-src/javascripts/ui/modal.js");
+
+
+const [modalShow, modalClose] = (0,_ui_modal_js__WEBPACK_IMPORTED_MODULE_1__["default"])();
+
+async function saveData(
+  editor,
+  inputs,
+  postStatus,
+  postId,
+  actionButtons,
+  event
+) {
+  const pressedButton = event.currentTarget;
+  if (event) {
+    pressedButton.disabled = true;
+  }
+
+  const [title, category, tags, slug] = inputs;
+
+  const contentValue = editor.getData();
+
+  const titleValue = title.value;
+  const categoryValue = category.value;
+  const tagsValue = tags.value;
+  const slugValue = slug.value;
+
+  const data = {
+    content: contentValue,
+    title: titleValue,
+    category: categoryValue,
+    tags: tagsValue,
+    slug: slugValue,
+    postId: postId,
+    postStatus: postStatus,
+  };
+
+  try {
+    const response = await (0,_utils_fetch_js__WEBPACK_IMPORTED_MODULE_0__.postData)('/add-post', data);
+    if (postStatus && postStatus === 'published') {
+      const [saveButton, publishButton] = actionButtons;
+
+      saveButton && saveButton.remove();
+      publishButton.textContent = 'update';
+    }
+
+    window.history.pushState({}, 'Article', `?id=${response.postId}`);
+  } catch (error) {
+    pressedButton.disabled = false;
+    modalShow(error.message);
+  }
+}
+
+async function getPreviousContent(editor, postId) {
+  try {
+    const response = await (0,_utils_fetch_js__WEBPACK_IMPORTED_MODULE_0__.getData)(`/post-edit/${postId}`);
+    editor.setData(response.content);
+  } catch (error) {
+    modalShow(error.message);
+  }
+}
+
+function changeHandler(editor, inputs, actionButtons) {
+  const activeActionButtons = () => {
+    actionButtons.forEach((btn) => {
+      if (btn) {
+        btn.disabled = false;
+      }
+    });
+  };
+
+  editor.model.document.on('change:data', (evt, data) => {
+    activeActionButtons();
+  });
+
+  inputs.forEach((input) => {
+    input.addEventListener('input', activeActionButtons);
+  });
+}
+
+function initCKEditor() {
+  const titlePlaceholder = 'Type your title';
+  const contentPlaceholder = 'Type your content';
+
+  const saveButton = document.getElementById('save');
+  const publishButton = document.getElementById('publish');
+  const token = document
+    .querySelector('meta[name="csrf-token"]')
+    .getAttribute('content');
+  const postId = document.querySelector('input[name="postId"]').value;
+  const categoryId = document.querySelector('input[name="categoryId"]').value;
+
+  const title = document.getElementById('article-title');
+  const category = document.getElementById('article-category');
+  const tags = document.getElementById('article-tags');
+  const slug = document.getElementById('article-slug');
+
+  title.placeholder = titlePlaceholder;
+  BalloonBlockEditor.create(document.querySelector('#editor'), {
+    licenseKey: '',
+    simpleUpload: {
+      uploadUrl: '/editor-upload-image',
+
+      // Enable the XMLHttpRequest.withCredentials property.
+      withCredentials: true,
+
+      // Headers sent along with the XMLHttpRequest to the upload server.
+      headers: {
+        'CSRF-Token': token,
+      },
+    },
+    placeholder: contentPlaceholder,
+  })
+    .then(async (editor) => {
+      window.editor = editor;
+
+      postId && (await getPreviousContent(editor, postId));
+
+      const inputs = [title, category, tags, slug];
+      const actionButtons = [saveButton, publishButton];
+      changeHandler(editor, inputs, actionButtons);
+
+      publishButton.addEventListener('click', async (event) => {
+        saveData(editor, inputs, 'published', postId, actionButtons, event);
+      });
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+
+function openArticleMobileMenu() {
+  const optionsMenuBtn = document.getElementById('mobile-article-options');
+  const optionsMenu = document.querySelector('.article-edit__control-area');
+
+  optionsMenuBtn.addEventListener('click', (event) => {
+    event.stopPropagation();
+
+    optionsMenu.classList.toggle('active');
+  });
+
+  window.addEventListener('click', (event) => {
+    event.stopPropagation();
+    if (!event.target.matches('.article-edit__control-area') && !event.target.matches('.article-edit__control-area > *')) {
+      if (optionsMenu.classList.contains('active')) {
+
+        optionsMenu.classList.remove('active');
+      }
+    }
+  });
+}
+openArticleMobileMenu();
+initCKEditor();
+
+})();
+
 /******/ })()
 ;
+//# sourceMappingURL=editor.js.map

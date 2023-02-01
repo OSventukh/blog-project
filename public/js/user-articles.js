@@ -1,24 +1,6 @@
-/*
- * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
- * This devtool is neither made for production nor for readable output files.
- * It uses "eval()" calls to create a separate source file in the browser devtools.
- * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
- * or disable the default devtool with "devtool: false".
- * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
- */
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
-
-/***/ "./client-src/javascripts/pages/user-articles.js":
-/*!*******************************************************!*\
-  !*** ./client-src/javascripts/pages/user-articles.js ***!
-  \*******************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _ui_tabs_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../ui/tabs.js */ \"./client-src/javascripts/ui/tabs.js\");\n\r\n\r\n\r\n(0,_ui_tabs_js__WEBPACK_IMPORTED_MODULE_0__[\"default\"])('all', 'all');\r\n(0,_ui_tabs_js__WEBPACK_IMPORTED_MODULE_0__[\"default\"])('published', 'published');\r\n(0,_ui_tabs_js__WEBPACK_IMPORTED_MODULE_0__[\"default\"])('draft', 'draft');\r\n\n\n//# sourceURL=webpack://blog-project/./client-src/javascripts/pages/user-articles.js?");
-
-/***/ }),
 
 /***/ "./client-src/javascripts/ui/tabs.js":
 /*!*******************************************!*\
@@ -26,7 +8,22 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _ui_
   \*******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ tabs)\n/* harmony export */ });\nfunction tabs(id, status) {\r\n  document.getElementById(id).addEventListener('click', (e) => {\r\n    const searchParams = new URLSearchParams(window.location.search);\r\n    e.target.classList.add('active')\r\n    searchParams.set('status', status)\r\n    searchParams.set('page', 1)\r\n    window.location.search = searchParams.toString();\r\n  })\r\n\r\n}\r\n\r\n\n\n//# sourceURL=webpack://blog-project/./client-src/javascripts/ui/tabs.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ tabs)
+/* harmony export */ });
+function tabs(id, status) {
+  document.getElementById(id).addEventListener('click', (e) => {
+    const searchParams = new URLSearchParams(window.location.search);
+    e.target.classList.add('active')
+    searchParams.set('status', status)
+    searchParams.set('page', 1)
+    window.location.search = searchParams.toString();
+  })
+
+}
+
+
 
 /***/ })
 
@@ -86,11 +83,23 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /******/ 	})();
 /******/ 	
 /************************************************************************/
-/******/ 	
-/******/ 	// startup
-/******/ 	// Load entry module and return exports
-/******/ 	// This entry module can't be inlined because the eval devtool is used.
-/******/ 	var __webpack_exports__ = __webpack_require__("./client-src/javascripts/pages/user-articles.js");
-/******/ 	
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+(() => {
+/*!*******************************************************!*\
+  !*** ./client-src/javascripts/pages/user-articles.js ***!
+  \*******************************************************/
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ui_tabs_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../ui/tabs.js */ "./client-src/javascripts/ui/tabs.js");
+
+
+
+(0,_ui_tabs_js__WEBPACK_IMPORTED_MODULE_0__["default"])('all', 'all');
+(0,_ui_tabs_js__WEBPACK_IMPORTED_MODULE_0__["default"])('published', 'published');
+(0,_ui_tabs_js__WEBPACK_IMPORTED_MODULE_0__["default"])('draft', 'draft');
+
+})();
+
 /******/ })()
 ;
+//# sourceMappingURL=user-articles.js.map

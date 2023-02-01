@@ -46,7 +46,7 @@ exports.getArticles = (req, res, next) => {
       totalPage: totalPage,
       status: status,
       currentPage: pageNumber,
-      templateName: 'articles-list'
+      templateName: 'articles-list',
     });
   });
 };
@@ -59,7 +59,7 @@ exports.getArticleCategories = (req, res, next) => {
       pageTitle: 'Article categories',
       categories: result.rows,
       totalPage: 1,
-      templateName: 'article-categories'
+      templateName: 'article-categories',
     });
   });
 };
@@ -68,13 +68,14 @@ exports.getAddCategory = (req, res, next) => {
   res.render('admin/articles/edit-category', {
     pageTitle: 'Add new category',
     message: '',
-    templateName: 'add-article-category'
+    templateName: 'add-article-category',
   });
 };
 
 exports.postAddCategory = (req, res, next) => {
   const { categoryName, categorySlug } = req.body;
 
+  console.log(req.body);
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
@@ -82,6 +83,7 @@ exports.postAddCategory = (req, res, next) => {
       message: errors.array()[0].msg,
     });
   }
+
   PostCategory.create({
     category_name: categoryName,
     category_slug: categorySlug
@@ -89,12 +91,15 @@ exports.postAddCategory = (req, res, next) => {
       : slugifyString(categoryName),
   })
     .then(() => {
-      res.redirect('/admin/articles/categories');
+      res.status(201).json({
+        message: `Category ${categoryName} was successfully created`,
+      });
     })
     .catch((error) => {
       if (error.name === 'SequelizeUniqueConstraintError') {
+        console.log(error);
         return res.status(400).json({
-          message: `${error.errors[0].message} (${error.errors[0].value})`,
+          message: 'Category with same name or slug already exist',
         });
       }
     });

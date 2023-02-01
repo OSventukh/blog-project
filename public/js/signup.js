@@ -1,24 +1,6 @@
-/*
- * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
- * This devtool is neither made for production nor for readable output files.
- * It uses "eval()" calls to create a separate source file in the browser devtools.
- * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
- * or disable the default devtool with "devtool: false".
- * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
- */
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
-
-/***/ "./client-src/javascripts/pages/signup.js":
-/*!************************************************!*\
-  !*** ./client-src/javascripts/pages/signup.js ***!
-  \************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _utils_fetch__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/fetch */ \"./client-src/javascripts/utils/fetch.js\");\n/* harmony import */ var _ui_notification__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../ui/notification */ \"./client-src/javascripts/ui/notification.js\");\n\r\n\r\nfunction signup() {\r\n  const [notificationShow, notificationClose] = (0,_ui_notification__WEBPACK_IMPORTED_MODULE_1__[\"default\"])();\r\n\r\n  const signupForm = document.getElementById('signup-form');\r\n\r\n  signupForm.addEventListener('submit', async (event) => {\r\n    event.preventDefault();\r\n    const email = document.getElementById('signup-email').value;\r\n    const nickname = document.getElementById('signup-nickname').value;\r\n    const password = document.getElementById('signup-password').value;\r\n\r\n    try {\r\n      await (0,_utils_fetch__WEBPACK_IMPORTED_MODULE_0__.postData)('/signup', {\r\n        email: email,\r\n        nickname: nickname,\r\n        password: password,\r\n      });\r\n      location.href = '/?confirm-email';\r\n    } catch (error) {\r\n      notificationShow(\r\n        error.message,\r\n        '#signup-form',\r\n        'error',\r\n        false,\r\n        'afterbegin'\r\n      );\r\n    }\r\n  });\r\n}\r\n\r\nsignup();\r\n\n\n//# sourceURL=webpack://blog-project/./client-src/javascripts/pages/signup.js?");
-
-/***/ }),
 
 /***/ "./client-src/javascripts/ui/notification.js":
 /*!***************************************************!*\
@@ -26,7 +8,50 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _uti
   \***************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ notification)\n/* harmony export */ });\nfunction notification() {\r\n  function notificationShow(\r\n    message,\r\n    selector,\r\n    status='error',\r\n    withCloseBtn = false,\r\n    methodInserts = 'beforebegin'\r\n  ) {\r\n    const notificationTemplate = `\r\n    <div class=\"message__alert ${status}\">\r\n      ${ withCloseBtn ? '<button class=\"message__alert-close\"><i class=\"fa-solid fa-xmark\"></i></button>' : ''}\r\n      <div class=\"message__alert-content\">\r\n        ${message}\r\n      </div>\r\n    </div>\r\n  `;\r\n\r\n    const existError = document.querySelector('.message__alert');\r\n\r\n    if (existError) {\r\n      existError.remove();\r\n    }\r\n\r\n    document.querySelector(selector).insertAdjacentHTML(methodInserts, notificationTemplate);\r\n    \r\n    \r\n    const closeBtn = document.querySelector('.message__alert-close');\r\n\r\n    if (closeBtn) {\r\n      closeBtn.addEventListener('click', closeNotification);\r\n    }\r\n  }\r\n\r\n  function notificationClose() {\r\n    document.querySelector('.message__alert').remove();\r\n  }\r\n\r\n  return [notificationShow, notificationClose];\r\n}\r\n\n\n//# sourceURL=webpack://blog-project/./client-src/javascripts/ui/notification.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ notification)
+/* harmony export */ });
+function notification() {
+  function notificationShow(
+    message,
+    selector,
+    status='error',
+    withCloseBtn = false,
+    methodInserts = 'beforebegin'
+  ) {
+    const notificationTemplate = `
+    <div class="message__alert ${status}">
+      ${ withCloseBtn ? '<button class="message__alert-close"><i class="fa-solid fa-xmark"></i></button>' : ''}
+      <div class="message__alert-content">
+        ${message}
+      </div>
+    </div>
+  `;
+
+    const existError = document.querySelector('.message__alert');
+
+    if (existError) {
+      existError.remove();
+    }
+
+    document.querySelector(selector).insertAdjacentHTML(methodInserts, notificationTemplate);
+    
+    
+    const closeBtn = document.querySelector('.message__alert-close');
+
+    if (closeBtn) {
+      closeBtn.addEventListener('click', closeNotification);
+    }
+  }
+
+  function notificationClose() {
+    document.querySelector('.message__alert').remove();
+  }
+
+  return [notificationShow, notificationClose];
+}
+
 
 /***/ }),
 
@@ -36,7 +61,43 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
   \***********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"getData\": () => (/* binding */ getData),\n/* harmony export */   \"postData\": () => (/* binding */ postData)\n/* harmony export */ });\nconst token = document\r\n  .querySelector('meta[name=\"csrf-token\"]')\r\n  .getAttribute('content');\r\n\r\nasync function getData(url) {\r\n  const res = await fetch(url);\r\n  const result = await res.json()\r\n  if (!res.ok) {\r\n    throw new Error(result.message || 'Something went wrong')\r\n  }\r\n  return result;\r\n}\r\n\r\nasync function postData(url, data, contentType) {\r\n  let res = await fetch(url, {\r\n    method: 'POST',\r\n    headers: {\r\n      'CSRF-Token': token,\r\n      'Content-Type': contentType || 'application/json',\r\n    },\r\n    body: contentType ? data : JSON.stringify(data),\r\n  });\r\n\r\n  const result = await res.json();\r\n\r\n  if (!res.ok) {\r\n    throw new Error(result.message || 'Something went wrong');\r\n  }\r\n\r\n  return result;\r\n}\r\n\n\n//# sourceURL=webpack://blog-project/./client-src/javascripts/utils/fetch.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "getData": () => (/* binding */ getData),
+/* harmony export */   "postData": () => (/* binding */ postData)
+/* harmony export */ });
+const token = document
+  .querySelector('meta[name="csrf-token"]')
+  .getAttribute('content');
+
+async function getData(url) {
+  const res = await fetch(url);
+  const result = await res.json()
+  if (!res.ok) {
+    throw new Error(result.message || 'Something went wrong')
+  }
+  return result;
+}
+
+async function postData(url, data, contentType) {
+  let res = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'CSRF-Token': token,
+      'Content-Type': contentType || 'application/json',
+    },
+    body: contentType ? data : JSON.stringify(data),
+  });
+
+  const result = await res.json();
+
+  if (!res.ok) {
+    throw new Error(result.message || 'Something went wrong');
+  }
+
+  return result;
+}
+
 
 /***/ })
 
@@ -96,11 +157,51 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /******/ 	})();
 /******/ 	
 /************************************************************************/
-/******/ 	
-/******/ 	// startup
-/******/ 	// Load entry module and return exports
-/******/ 	// This entry module can't be inlined because the eval devtool is used.
-/******/ 	var __webpack_exports__ = __webpack_require__("./client-src/javascripts/pages/signup.js");
-/******/ 	
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+(() => {
+/*!************************************************!*\
+  !*** ./client-src/javascripts/pages/signup.js ***!
+  \************************************************/
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _utils_fetch__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/fetch */ "./client-src/javascripts/utils/fetch.js");
+/* harmony import */ var _ui_notification__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../ui/notification */ "./client-src/javascripts/ui/notification.js");
+
+
+function signup() {
+  const [notificationShow, notificationClose] = (0,_ui_notification__WEBPACK_IMPORTED_MODULE_1__["default"])();
+
+  const signupForm = document.getElementById('signup-form');
+
+  signupForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const email = document.getElementById('signup-email').value;
+    const nickname = document.getElementById('signup-nickname').value;
+    const password = document.getElementById('signup-password').value;
+
+    try {
+      await (0,_utils_fetch__WEBPACK_IMPORTED_MODULE_0__.postData)('/signup', {
+        email: email,
+        nickname: nickname,
+        password: password,
+      });
+      location.href = '/?confirm-email';
+    } catch (error) {
+      notificationShow(
+        error.message,
+        '#signup-form',
+        'error',
+        false,
+        'afterbegin'
+      );
+    }
+  });
+}
+
+signup();
+
+})();
+
 /******/ })()
 ;
+//# sourceMappingURL=signup.js.map

@@ -2,54 +2,72 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./client-src/javascripts/ui/notification.js":
-/*!***************************************************!*\
-  !*** ./client-src/javascripts/ui/notification.js ***!
-  \***************************************************/
+/***/ "./client-src/javascripts/ui/modal.js":
+/*!********************************************!*\
+  !*** ./client-src/javascripts/ui/modal.js ***!
+  \********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ notification)
+/* harmony export */   "default": () => (/* binding */ modal)
 /* harmony export */ });
-function notification() {
-  function notificationShow(
-    message,
-    selector,
-    status='error',
-    withCloseBtn = false,
-    methodInserts = 'beforebegin'
-  ) {
-    const notificationTemplate = `
-    <div class="message__alert ${status}">
-      ${ withCloseBtn ? '<button class="message__alert-close"><i class="fa-solid fa-xmark"></i></button>' : ''}
-      <div class="message__alert-content">
-        ${message}
-      </div>
-    </div>
-  `;
+function modal() {
+  const backdrop = document.querySelector('.backdrop');
+  const modalWindow = document.querySelector('.modal');
+  const modalCloseBtn = modalWindow.querySelector('.modal__close');
+  const modalContent = modalWindow.querySelector('.modal__content');
+  const cancelBtn = modalWindow.querySelector('#cancel');
 
-    const existError = document.querySelector('.message__alert');
+  const modalShow = (content) => {
+    const mobileMenu = document.querySelector('.navigation__list');
 
-    if (existError) {
-      existError.remove();
+    if (mobileMenu && mobileMenu.classList.contains('active')) {
+      mobileMenu.classList.remove('active');
+      backdrop.classList.remove('show-flex');
     }
 
-    document.querySelector(selector).insertAdjacentHTML(methodInserts, notificationTemplate);
-    
-    
-    const closeBtn = document.querySelector('.message__alert-close');
-
-    if (closeBtn) {
-      closeBtn.addEventListener('click', closeNotification);
+    if (modalWindow && modalWindow.classList.contains('show')) {
+      modalWindow.classList.remove('show');
+      backdrop.classList.remove('show-flex', 'full');
     }
+
+    backdrop.classList.add('show-flex');
+    backdrop.classList.add('full');
+    modalWindow.classList.add('show');
+    modalWindow.focus();
+    if (document.body.style.overflow === 'hidden') {
+      document.body.style.overflow = '';
+    } else {
+      document.body.style.overflow = 'hidden';
+    }
+
+    modalContent.innerHTML = content;
+  };
+
+  const modalClose = () => {
+    modalWindow.classList.remove('show');
+    backdrop.classList.remove('show-flex', 'full');
+    document.body.style.overflow = '';
+  };
+
+  if (backdrop) {
+    backdrop.addEventListener('click', (event) => {
+      modalClose();
+    });
   }
 
-  function notificationClose() {
-    document.querySelector('.message__alert').remove();
+  modalCloseBtn.addEventListener('click', (event) => {
+    modalClose();
+  });
+
+  if (cancelBtn) {
+    cancelBtn.addEventListener('click', (event) => {
+      closeModal();
+    });
   }
 
-  return [notificationShow, notificationClose];
+  return [modalShow, modalClose, modalWindow];
 }
 
 
@@ -160,51 +178,43 @@ async function postData(url, data, contentType) {
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
-/*!***********************************************!*\
-  !*** ./client-src/javascripts/pages/reset.js ***!
-  \***********************************************/
+/*!**************************************************!*\
+  !*** ./client-src/javascripts/pages/category.js ***!
+  \**************************************************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _utils_fetch_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/fetch.js */ "./client-src/javascripts/utils/fetch.js");
-/* harmony import */ var _ui_notification_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../ui/notification.js */ "./client-src/javascripts/ui/notification.js");
+/* harmony import */ var _utils_fetch__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/fetch */ "./client-src/javascripts/utils/fetch.js");
+/* harmony import */ var _ui_modal__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../ui/modal */ "./client-src/javascripts/ui/modal.js");
 
 
 
-const [notificationShow, notificationClose] = (0,_ui_notification_js__WEBPACK_IMPORTED_MODULE_1__["default"])();
-function resetPassword() {
-  const resetForm = document.getElementById('reset-form');
+function addCategory() {
+  const categoryForm = document.getElementById('edit-category');
 
-  resetForm.addEventListener('submit', async (event) => {
+  const [modalShow] = (0,_ui_modal__WEBPACK_IMPORTED_MODULE_1__["default"])();
+
+  categoryForm.addEventListener('submit', async (event) => {
     event.preventDefault();
-    
-    const passwordInput = document.getElementById('reset-password');
-    const emailInput = document.getElementById('reset-email');
-
-    let password;
-    let email;
-
-    if (passwordInput) {
-      password = passwordInput.value.trim();
-    }
-
-    if (emailInput) {
-      email = emailInput.value.trim();
-    }
-
-    try {
-      const response = await (0,_utils_fetch_js__WEBPACK_IMPORTED_MODULE_0__.postData)('/reset', {
-        password: password ? password : null,
-        email: email ? email : null,
-      });
-      location = '/?confirm-email'
-    } catch (error) {
-      notificationShow(error.message, '#reset-form', 'error', false, 'afterbegin')
+    const categoryName = document.getElementById('categoryName').value;
+    const categorySlug = document.getElementById('categorySlug').value;
+    if (categoryName && categoryName.trim().length > 0) {
+      try {
+        const response = await (0,_utils_fetch__WEBPACK_IMPORTED_MODULE_0__.postData)('/admin/articles/add-category', {
+          categoryName,
+          categorySlug,
+        });
+        modalShow(response.message);
+        categoryForm.reset();
+      } catch (error) {
+        modalShow(error.message);
+      }
     }
   });
 }
 
-resetPassword();
+addCategory();
+
 })();
 
 /******/ })()
 ;
-//# sourceMappingURL=reset.js.map
+//# sourceMappingURL=category.js.map

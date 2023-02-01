@@ -1,7 +1,6 @@
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
-const fs = require('fs');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const multer = require('multer');
@@ -9,7 +8,6 @@ const session = require('express-session');
 const sequelizeStore = require('connect-session-sequelize')(session.Store);
 const csurf = require('csurf');
 
-const { Console } = require('console');
 const helmet = require('helmet');
 const { sequelize } = require('./models');
 const compression = require('compression');
@@ -30,15 +28,15 @@ const app = express();
 app.set('views', path.join(__dirname, '/views'));
 app.set('view engine', 'ejs');
 
-// app.use(helmet({
-//   contentSecurityPolicy: {
-//     useDefaults: true,
-//     directives: {
-//       'script-src': ["'self'", "https://cdn.jsdelivr.net"]
-//     }
-//   }
-// }));
-// app.use(compression());
+app.use(helmet({
+  contentSecurityPolicy: {
+    useDefaults: true,
+    directives: {
+      'script-src': ["'self'", "https://cdn.jsdelivr.net", "https://cdn.socket.io"]
+    }
+  }
+}));
+app.use(compression());
 
 app.use(logger('dev'));
 
@@ -63,11 +61,11 @@ app.use('/media', express.static(path.join(__dirname, '../media')));
 const imageStorage = multer.diskStorage({
   destination: (req, file, cb) => {
     if (file.fieldname === 'avatar') {
-      cb(null, 'media/avatars');
+      cb(null, path.join(process.cwd(), 'media', 'avatars'));
     }
 
     if (file.fieldname === 'upload') {
-      cb(null, imagesFolderPath);
+      cb(null, path.join(process.cwd(), 'media', 'images'));
     }
   },
   filename: (req, file, cb) => {
@@ -136,7 +134,6 @@ app.use((err, req, res, next) => {
 
   // render the error page
   res.status(err.status || 500);
-  console.log(err);
   res.render('error', {
     pageTitle: err.message,
     csrfToken: req.csrfToken(),

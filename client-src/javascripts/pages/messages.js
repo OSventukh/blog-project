@@ -1,5 +1,5 @@
-import { getData, postData } from '../utils/fetch.js';
-
+import { getData, postData } from '../utils/fetch';
+import connectSocket from '../components/socket'
 
 function messenger() {
   const users = document.querySelectorAll('.messenger__user-item');
@@ -7,8 +7,11 @@ function messenger() {
   const messagesListField = document.querySelector('.messenger__messages');
   const mobileToggle = document.querySelector('.messenger__user-mobile');
   const userListMenu = document.querySelector('.messenger__users');
+  const loggedUser = document.currentScript.getAttribute('loggedUser')
   let receiverId;
   
+  const socket = connectSocket(loggedUser);
+
   const documentHeight = () => {
     const doc = document.documentElement;
     doc.style.setProperty('--doc-height', `${window.innerHeight}px`);

@@ -1,11 +1,3 @@
-/*
- * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
- * This devtool is neither made for production nor for readable output files.
- * It uses "eval()" calls to create a separate source file in the browser devtools.
- * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
- * or disable the default devtool with "devtool: false".
- * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
- */
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
@@ -16,17 +8,90 @@
   \****************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"deleteItem\": () => (/* binding */ deleteItem),\n/* harmony export */   \"deleteMultipleItems\": () => (/* binding */ deleteMultipleItems)\n/* harmony export */ });\n/* harmony import */ var _utils_fetch__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/fetch */ \"./client-src/javascripts/utils/fetch.js\");\n/* harmony import */ var _ui_modal__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../ui/modal */ \"./client-src/javascripts/ui/modal.js\");\n\r\n\r\n\r\nconst confirmDeleting = (url, value, message) => {\r\n  const [modalShow, modalClose] = (0,_ui_modal__WEBPACK_IMPORTED_MODULE_1__[\"default\"])();\r\n\r\n  const confirmDeleting = `\r\n    <div class=\"modal__message\">${message}</div>\r\n    <div class=\"modal__buttons\">\r\n      <button class=\"button button-confirm\" id='confirm-deleting'>Yes</button>\r\n      <button class=\"button button-cancel\" id='cancel-deleting'>No</button>\r\n    </div>\r\n  `;\r\n  modalShow(confirmDeleting);\r\n\r\n  document\r\n    .getElementById('confirm-deleting')\r\n    .addEventListener('click', async (event) => {\r\n      try {\r\n        await (0,_utils_fetch__WEBPACK_IMPORTED_MODULE_0__.postData)(url, {\r\n          values: [value],\r\n        });\r\n\r\n        location.reload();\r\n      } catch (error) {\r\n        modalShow(error.message);\r\n      }\r\n    });\r\n\r\n  document\r\n    .getElementById('cancel-deleting')\r\n    .addEventListener('click', (event) => {\r\n      modalClose();\r\n    });\r\n};\r\n\r\nfunction deleteItem(url, selector, warningMessage) {\r\n  const deleteBtns = document.querySelectorAll(selector);\r\n\r\n  deleteBtns.forEach((btn) => {\r\n    btn.addEventListener('click', async (event) => {\r\n      event.preventDefault();\r\n      const value = event.target.nextElementSibling.value;\r\n      confirmDeleting(url, value, warningMessage);\r\n    });\r\n  });\r\n}\r\n\r\nfunction deleteMultipleItems(url, selector, warningMessage) {\r\n  const [modalShow] = (0,_ui_modal__WEBPACK_IMPORTED_MODULE_1__[\"default\"])();\r\n  const articlesChecks = document.querySelectorAll(selector);\r\n  const multipleOptionsPanel = document.querySelector('.multiple-options');\r\n  let checkedItems = [];\r\n  articlesChecks.forEach((item) => {\r\n    item.addEventListener('click', (event) => {\r\n      checkedItems = [...articlesChecks]\r\n        .filter((item) => item.checked)\r\n        .map((item) => item.value);\r\n      if (checkedItems.length > 0) {\r\n        multipleOptionsPanel.style.display = 'flex';\r\n        document.querySelector(\r\n          '.multiple-options__checked-num span'\r\n        ).textContent = checkedItems.length;\r\n      } else {\r\n        multipleOptionsPanel.style.display = 'none';\r\n      }\r\n    });\r\n  });\r\n\r\n  document\r\n    .getElementById('delete-multiple-items')?.addEventListener('click', async () => {\r\n      if (checkedItems.length > 0) {\r\n        confirmDeleting(url, checkedItems, `${warningMessage} (${checkedItems.length})`);\r\n      }\r\n    });\r\n}\r\n\n\n//# sourceURL=webpack://blog-project/./client-src/javascripts/admin/deleteItem.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "deleteItem": () => (/* binding */ deleteItem),
+/* harmony export */   "deleteMultipleItems": () => (/* binding */ deleteMultipleItems)
+/* harmony export */ });
+/* harmony import */ var _utils_fetch__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/fetch */ "./client-src/javascripts/utils/fetch.js");
+/* harmony import */ var _ui_modal__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../ui/modal */ "./client-src/javascripts/ui/modal.js");
 
-/***/ }),
 
-/***/ "./client-src/javascripts/admin/media.js":
-/*!***********************************************!*\
-  !*** ./client-src/javascripts/admin/media.js ***!
-  \***********************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _utils_fetch__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/fetch */ \"./client-src/javascripts/utils/fetch.js\");\n/* harmony import */ var _deleteItem__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./deleteItem */ \"./client-src/javascripts/admin/deleteItem.js\");\n\r\n\r\n\r\nconst token = document\r\n  .querySelector('meta[name=\"csrf-token\"]')\r\n  .getAttribute('content');\r\n\r\nconst forms = document.querySelectorAll('#delete-media');\r\n\r\nforms.forEach((form) => {\r\n  form.addEventListener('submit', async (event) => {\r\n    event.preventDefault();\r\n    const mediaItem = form.closest('.media__item');\r\n    const imageName = form.querySelector('input[name=mediaUrl]').value;\r\n\r\n    try {\r\n      await (0,_utils_fetch__WEBPACK_IMPORTED_MODULE_0__.postData)('/admin/delete-media', {images: [imageName]});\r\n      const currentItemsAmount = document.querySelector('.admin-panel__item-amount span').textContent;\r\n      document.querySelector('.admin-panel__item-amount span').textContent = +currentItemsAmount - 1;\r\n      mediaItem.remove();\r\n    } catch (error) {\r\n      \r\n    }\r\n    \r\n\r\n  });\r\n});\r\n\r\nconst checkboxes = document.querySelectorAll('.media__check');\r\ncheckboxes.forEach((checkbox) => {\r\n  const media = checkbox.closest('.media__item');\r\n  checkbox.addEventListener('click', (event) => {\r\n    if (checkbox.checked) {\r\n      media.classList.add('active');\r\n\r\n    } else {\r\n      media.classList.remove('active');\r\n    }\r\n  })\r\n\r\n})\r\n\r\nconst getUrlBtns = document.querySelectorAll('.media__geturl');\r\n\r\ngetUrlBtns.forEach((getUrlBtn) => {\r\n  getUrlBtn.addEventListener('click', (event) => {\r\n    const imageSrc = getUrlBtn.parentNode.nextElementSibling.src;\r\n    if (imageSrc) {\r\n      navigator.clipboard.writeText(imageSrc);\r\n      const prevIco = getUrlBtn.innerHTML;\r\n      getUrlBtn.innerHTML = '<i class=\"fa-solid fa-check\"></i>';\r\n\r\n      setTimeout(() => {\r\n        getUrlBtn.innerHTML = prevIco;\r\n      }, 1500);\r\n    }\r\n  });\r\n});\r\n\r\n(0,_deleteItem__WEBPACK_IMPORTED_MODULE_1__.deleteMultipleItems)('/admin/delete-media', '.media__check')\r\n\n\n//# sourceURL=webpack://blog-project/./client-src/javascripts/admin/media.js?");
+const confirmDeleting = (url, value, message) => {
+  const [modalShow, modalClose] = (0,_ui_modal__WEBPACK_IMPORTED_MODULE_1__["default"])();
+
+  const confirmDeleting = `
+    <div class="modal__message">${message}</div>
+    <div class="modal__buttons">
+      <button class="button button-confirm" id='confirm-deleting'>Yes</button>
+      <button class="button button-cancel" id='cancel-deleting'>No</button>
+    </div>
+  `;
+  modalShow(confirmDeleting);
+
+  document
+    .getElementById('confirm-deleting')
+    .addEventListener('click', async (event) => {
+      try {
+        await (0,_utils_fetch__WEBPACK_IMPORTED_MODULE_0__.postData)(url, {
+          values: [value],
+        });
+
+        location.reload();
+      } catch (error) {
+        modalShow(error.message);
+      }
+    });
+
+  document
+    .getElementById('cancel-deleting')
+    .addEventListener('click', (event) => {
+      modalClose();
+    });
+};
+
+function deleteItem(url, selector, warningMessage) {
+  const deleteBtns = document.querySelectorAll(selector);
+
+  deleteBtns.forEach((btn) => {
+    btn.addEventListener('click', async (event) => {
+      event.preventDefault();
+      const value = event.target.nextElementSibling.value;
+      confirmDeleting(url, value, warningMessage);
+    });
+  });
+}
+
+function deleteMultipleItems(url, selector, warningMessage) {
+  const [modalShow] = (0,_ui_modal__WEBPACK_IMPORTED_MODULE_1__["default"])();
+  const articlesChecks = document.querySelectorAll(selector);
+  const multipleOptionsPanel = document.querySelector('.multiple-options');
+  let checkedItems = [];
+  articlesChecks.forEach((item) => {
+    item.addEventListener('click', (event) => {
+      checkedItems = [...articlesChecks]
+        .filter((item) => item.checked)
+        .map((item) => item.value);
+      if (checkedItems.length > 0) {
+        multipleOptionsPanel.style.display = 'flex';
+        document.querySelector(
+          '.multiple-options__checked-num span'
+        ).textContent = checkedItems.length;
+      } else {
+        multipleOptionsPanel.style.display = 'none';
+      }
+    });
+  });
+
+  document
+    .getElementById('delete-multiple-items')?.addEventListener('click', async () => {
+      if (checkedItems.length > 0) {
+        confirmDeleting(url, checkedItems, `${warningMessage} (${checkedItems.length})`);
+      }
+    });
+}
+
 
 /***/ }),
 
@@ -36,7 +101,68 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _uti
   \********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ modal)\n/* harmony export */ });\nfunction modal() {\r\n  const backdrop = document.querySelector('.backdrop');\r\n  const modalWindow = document.querySelector('.modal');\r\n  const modalCloseBtn = modalWindow.querySelector('.modal__close');\r\n  const modalContent = modalWindow.querySelector('.modal__content');\r\n  const cancelBtn = modalWindow.querySelector('#cancel');\r\n\r\n  const modalShow = (content) => {\r\n    const mobileMenu = document.querySelector('.navigation__list');\r\n\r\n    if (mobileMenu && mobileMenu.classList.contains('active')) {\r\n      mobileMenu.classList.remove('active');\r\n      backdrop.classList.remove('show-flex');\r\n    }\r\n\r\n    if (modalWindow && modalWindow.classList.contains('show')) {\r\n      modalWindow.classList.remove('show');\r\n      backdrop.classList.remove('show-flex', 'full');\r\n    }\r\n\r\n    backdrop.classList.add('show-flex');\r\n    backdrop.classList.add('full');\r\n    modalWindow.classList.add('show');\r\n    modalWindow.focus();\r\n    if (document.body.style.overflow === 'hidden') {\r\n      document.body.style.overflow = '';\r\n    } else {\r\n      document.body.style.overflow = 'hidden';\r\n    }\r\n\r\n    modalContent.innerHTML = content;\r\n  };\r\n\r\n  const modalClose = () => {\r\n    modalWindow.classList.remove('show');\r\n    backdrop.classList.remove('show-flex', 'full');\r\n    document.body.style.overflow = '';\r\n  };\r\n\r\n  if (backdrop) {\r\n    backdrop.addEventListener('click', (event) => {\r\n      modalClose();\r\n    });\r\n  }\r\n\r\n  modalCloseBtn.addEventListener('click', (event) => {\r\n    modalClose();\r\n  });\r\n\r\n  if (cancelBtn) {\r\n    cancelBtn.addEventListener('click', (event) => {\r\n      closeModal();\r\n    });\r\n  }\r\n\r\n  return [modalShow, modalClose, modalWindow];\r\n}\r\n\n\n//# sourceURL=webpack://blog-project/./client-src/javascripts/ui/modal.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ modal)
+/* harmony export */ });
+function modal() {
+  const backdrop = document.querySelector('.backdrop');
+  const modalWindow = document.querySelector('.modal');
+  const modalCloseBtn = modalWindow.querySelector('.modal__close');
+  const modalContent = modalWindow.querySelector('.modal__content');
+  const cancelBtn = modalWindow.querySelector('#cancel');
+
+  const modalShow = (content) => {
+    const mobileMenu = document.querySelector('.navigation__list');
+
+    if (mobileMenu && mobileMenu.classList.contains('active')) {
+      mobileMenu.classList.remove('active');
+      backdrop.classList.remove('show-flex');
+    }
+
+    if (modalWindow && modalWindow.classList.contains('show')) {
+      modalWindow.classList.remove('show');
+      backdrop.classList.remove('show-flex', 'full');
+    }
+
+    backdrop.classList.add('show-flex');
+    backdrop.classList.add('full');
+    modalWindow.classList.add('show');
+    modalWindow.focus();
+    if (document.body.style.overflow === 'hidden') {
+      document.body.style.overflow = '';
+    } else {
+      document.body.style.overflow = 'hidden';
+    }
+
+    modalContent.innerHTML = content;
+  };
+
+  const modalClose = () => {
+    modalWindow.classList.remove('show');
+    backdrop.classList.remove('show-flex', 'full');
+    document.body.style.overflow = '';
+  };
+
+  if (backdrop) {
+    backdrop.addEventListener('click', (event) => {
+      modalClose();
+    });
+  }
+
+  modalCloseBtn.addEventListener('click', (event) => {
+    modalClose();
+  });
+
+  if (cancelBtn) {
+    cancelBtn.addEventListener('click', (event) => {
+      closeModal();
+    });
+  }
+
+  return [modalShow, modalClose, modalWindow];
+}
+
 
 /***/ }),
 
@@ -46,7 +172,43 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
   \***********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"getData\": () => (/* binding */ getData),\n/* harmony export */   \"postData\": () => (/* binding */ postData)\n/* harmony export */ });\nconst token = document\r\n  .querySelector('meta[name=\"csrf-token\"]')\r\n  .getAttribute('content');\r\n\r\nasync function getData(url) {\r\n  const res = await fetch(url);\r\n  const result = await res.json()\r\n  if (!res.ok) {\r\n    throw new Error(result.message || 'Something went wrong')\r\n  }\r\n  return result;\r\n}\r\n\r\nasync function postData(url, data, contentType) {\r\n  let res = await fetch(url, {\r\n    method: 'POST',\r\n    headers: {\r\n      'CSRF-Token': token,\r\n      'Content-Type': contentType || 'application/json',\r\n    },\r\n    body: contentType ? data : JSON.stringify(data),\r\n  });\r\n\r\n  const result = await res.json();\r\n\r\n  if (!res.ok) {\r\n    throw new Error(result.message || 'Something went wrong');\r\n  }\r\n\r\n  return result;\r\n}\r\n\n\n//# sourceURL=webpack://blog-project/./client-src/javascripts/utils/fetch.js?");
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "getData": () => (/* binding */ getData),
+/* harmony export */   "postData": () => (/* binding */ postData)
+/* harmony export */ });
+const token = document
+  .querySelector('meta[name="csrf-token"]')
+  .getAttribute('content');
+
+async function getData(url) {
+  const res = await fetch(url);
+  const result = await res.json()
+  if (!res.ok) {
+    throw new Error(result.message || 'Something went wrong')
+  }
+  return result;
+}
+
+async function postData(url, data, contentType) {
+  let res = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'CSRF-Token': token,
+      'Content-Type': contentType || 'application/json',
+    },
+    body: contentType ? data : JSON.stringify(data),
+  });
+
+  const result = await res.json();
+
+  if (!res.ok) {
+    throw new Error(result.message || 'Something went wrong');
+  }
+
+  return result;
+}
+
 
 /***/ })
 
@@ -106,11 +268,78 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /******/ 	})();
 /******/ 	
 /************************************************************************/
-/******/ 	
-/******/ 	// startup
-/******/ 	// Load entry module and return exports
-/******/ 	// This entry module can't be inlined because the eval devtool is used.
-/******/ 	var __webpack_exports__ = __webpack_require__("./client-src/javascripts/admin/media.js");
-/******/ 	
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+(() => {
+/*!***********************************************!*\
+  !*** ./client-src/javascripts/admin/media.js ***!
+  \***********************************************/
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _utils_fetch__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/fetch */ "./client-src/javascripts/utils/fetch.js");
+/* harmony import */ var _deleteItem__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./deleteItem */ "./client-src/javascripts/admin/deleteItem.js");
+
+
+
+const token = document
+  .querySelector('meta[name="csrf-token"]')
+  .getAttribute('content');
+
+const forms = document.querySelectorAll('#delete-media');
+
+forms.forEach((form) => {
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const mediaItem = form.closest('.media__item');
+    const imageName = form.querySelector('input[name=mediaUrl]').value;
+
+    try {
+      await (0,_utils_fetch__WEBPACK_IMPORTED_MODULE_0__.postData)('/admin/delete-media', {images: [imageName]});
+      const currentItemsAmount = document.querySelector('.admin-panel__item-amount span').textContent;
+      document.querySelector('.admin-panel__item-amount span').textContent = +currentItemsAmount - 1;
+      mediaItem.remove();
+    } catch (error) {
+      
+    }
+    
+
+  });
+});
+
+const checkboxes = document.querySelectorAll('.media__check');
+checkboxes.forEach((checkbox) => {
+  const media = checkbox.closest('.media__item');
+  checkbox.addEventListener('click', (event) => {
+    if (checkbox.checked) {
+      media.classList.add('active');
+
+    } else {
+      media.classList.remove('active');
+    }
+  })
+
+})
+
+const getUrlBtns = document.querySelectorAll('.media__geturl');
+
+getUrlBtns.forEach((getUrlBtn) => {
+  getUrlBtn.addEventListener('click', (event) => {
+    const imageSrc = getUrlBtn.parentNode.nextElementSibling.src;
+    if (imageSrc) {
+      navigator.clipboard.writeText(imageSrc);
+      const prevIco = getUrlBtn.innerHTML;
+      getUrlBtn.innerHTML = '<i class="fa-solid fa-check"></i>';
+
+      setTimeout(() => {
+        getUrlBtn.innerHTML = prevIco;
+      }, 1500);
+    }
+  });
+});
+
+(0,_deleteItem__WEBPACK_IMPORTED_MODULE_1__.deleteMultipleItems)('/admin/delete-media', '.media__check')
+
+})();
+
 /******/ })()
 ;
+//# sourceMappingURL=media.js.map

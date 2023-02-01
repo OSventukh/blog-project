@@ -84,13 +84,11 @@ exports.postUserProfile = (req, res, next) => {
       }
 
       return user.save().then((user) => {
-        console.log('user', user)
         req.session.user = user;
         res.redirect(`/profile/${user.nickname}`);
       });
     })
     .catch((error) => {
-      console.log(error)
       next(error)
     });
 };

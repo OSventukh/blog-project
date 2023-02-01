@@ -9,12 +9,14 @@
           <col class="name">
           <col class="slug">
           <col class="amount">
+          <col class="actions">
         </colgroup>
         <thead>
           <tr>
             <th>Category Name</th>
             <th>Category Slug</th>
             <th>Number of Articles</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -22,16 +24,6 @@
             <% for (let category of categories) {%>
               <tr>
                 <td>
-                  <% if (category.id !== 1) { %>
-                  <button class="item-option"><i class="fa-solid fa-ellipsis-vertical"></i></button>
-                  <ul class="item-option__list">
-                    <li>
-                      <a class="item-option__delete" href="#">Delete</a>
-                      <input type="hidden" name="itemId" value="<%=category.id%>">
-
-                    </li>
-                  </ul>
-                    <% } %>
                   <%= category.category_name %>
                 </td>
                 <td>
@@ -40,12 +32,23 @@
                 <td>
                   <%=category.posts.length %>
                 </td>
+                <td>
+                  <% if (category.id !== 1) { %>
+                    <button class="table-options"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                    <ul class="table-options-list">
+                      <li>
+                        <a class="articles__item-delete" href="#">Delete</a>
+                        <input type="hidden" name="categoryId" value="<%=category.id%>">
+                      </li>
+                    </ul>
+                    
+                  <% } %>
+                </td>
               </tr>
               <% } %>
                 <%} else {%>
                   <tr>
                     <td colspan="4">No categories</td>
-                    
                   </tr>
                   <% } %>
         </tbody>

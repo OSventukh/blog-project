@@ -10,7 +10,6 @@ exports.deleteImages = (images) => {
 };
 
 exports.isFileExist = (filePath) => {
-  console.log('path', filePath)
   return fs.readFile(filePath, (error, data) => {
     if (error) {
       return false;
