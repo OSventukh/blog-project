@@ -351,6 +351,7 @@ footer {
 }
 
 /* FORM */
+
 .login-form,
 .reset-form {
   width: 30rem;
@@ -382,20 +383,13 @@ footer {
   height: 4rem;
 }
 
-.form-actions {
-  margin-top: 2rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
+.form-buttons {
+  margin-top: 1rem;
 }
 
-.form-actions button {
-  padding: 1rem;
-}
-
-.login-form__buttons {
-  flex-direction: column;
+.login-form__reset {
+  display: block;
+  margin: 1rem 0;
 }
 
 .login-form__submit {
