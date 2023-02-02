@@ -1,36 +1,32 @@
-const editCategoryForm = document.getElementById('edit-category');
+import { postData } from '../utils/fetch';
+import modal from '../ui/modal';
 
-if (editCategoryForm) {
-  editCategoryForm.addEventListener('submit', async (event) => {
+function addCategory() {
+  const categoryForm = document.getElementById('edit-category');
+
+  if (!categoryForm) {
+    return;
+  }
+  
+  const [modalShow] = modal();
+
+  categoryForm.addEventListener('submit', async (event) => {
     event.preventDefault();
     const categoryName = document.getElementById('categoryName').value;
     const categorySlug = document.getElementById('categorySlug').value;
-  
-    const data = JSON.stringify({
-      categoryName: categoryName,
-      categorySlug: categorySlug,
-    });
-  
-    const response = await fetchData('/admin/articles/add-category', data);
-    if (response.ok) { 
-      return location.href = '/admin/articles/categories';
-    }
-  
-    const res = await response.json();
-  
-    if (res.message) {
-    
-      const errorMessage = document.createElement('div');
-      errorMessage.classList.add('message__alert', 'error', 'show');
-      const existError = document.querySelector('.message__alert');
-  
-      if (existError) {
-        existError.remove();
+    if (categoryName && categoryName.trim().length > 0) {
+      try {
+        const response = await postData('/admin/articles/add-category', {
+          categoryName,
+          categorySlug,
+        });
+        modalShow(response.message);
+        categoryForm.reset();
+      } catch (error) {
+        modalShow(error.message);
       }
-  
-      errorMessage.textContent = res.message;
-      editCategoryForm.prepend(errorMessage);
     }
   });
 }
 
+addCategory();

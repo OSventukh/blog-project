@@ -34,7 +34,7 @@ exports.getAllUsers = (req, res, next) => {
 
 exports.postDeleteUsers = (req, res, next) => {
   const { values } = req.body;
-  console.log(req.body)
+
   if (!values || values.length === 0) {
     return res.status(404).json({
       message: 'Post id is undefined',

@@ -14,7 +14,7 @@ module.exports = {
     'user-articles': './client-src/javascripts/pages/user-articles.js',
     admin: './client-src/javascripts/admin/admin.js',
     media: './client-src/javascripts/admin/media.js',
-    category: './client-src/javascripts/pages/category.js'
+    category: './client-src/javascripts/admin/category.js'
 
   },
   output: {

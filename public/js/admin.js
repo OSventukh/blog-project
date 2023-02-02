@@ -35,7 +35,7 @@ const confirmDeleting = (url, value, message) => {
     .addEventListener('click', async (event) => {
       try {
         await (0,_utils_fetch__WEBPACK_IMPORTED_MODULE_0__.postData)(url, {
-          values: [value],
+          values: Array.isArray(value) ? value : [value],
         });
 
         location.reload();
@@ -287,6 +287,12 @@ __webpack_require__.r(__webpack_exports__);
 (0,_deleteItem__WEBPACK_IMPORTED_MODULE_0__.deleteItem)('/admin/delete-users', '.users__item-delete', 'Are you sure you want to delete this user?');
 
 (0,_deleteItem__WEBPACK_IMPORTED_MODULE_0__.deleteMultipleItems)('/admin/delete-users', '.users__check', 'Are you sure you want to delete this users?');
+
+
+// Deleting categoies
+(0,_deleteItem__WEBPACK_IMPORTED_MODULE_0__.deleteItem)('/admin/articles/delete-category', '.categories__item-delete', 'Are you sure you want to delete this article category?');
+
+(0,_deleteItem__WEBPACK_IMPORTED_MODULE_0__.deleteMultipleItems)('/admin/articles/delete-category', '.categories__check', 'Are you sure you want to delete this categories?');
 })();
 
 /******/ })()

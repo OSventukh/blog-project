@@ -18,7 +18,7 @@ const confirmDeleting = (url, value, message) => {
     .addEventListener('click', async (event) => {
       try {
         await postData(url, {
-          values: [value],
+          values: Array.isArray(value) ? value : [value],
         });
 
         location.reload();

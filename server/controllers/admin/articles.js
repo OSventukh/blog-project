@@ -1,6 +1,6 @@
 const { validationResult } = require('express-validator');
 const { Post, PostCategory } = require('../../models');
-
+const { Op } = require('sequelize')
 const slugifyString = require('../../utils/slugify');
 
 exports.getArticles = (req, res, next) => {
@@ -75,7 +75,6 @@ exports.getAddCategory = (req, res, next) => {
 exports.postAddCategory = (req, res, next) => {
   const { categoryName, categorySlug } = req.body;
 
-  console.log(req.body);
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
@@ -106,15 +105,19 @@ exports.postAddCategory = (req, res, next) => {
 };
 
 exports.postDeleteCategory = (req, res, next) => {
-  const itemId = req.body.data;
+  const { values } = req.body;
 
-  if (itemId === 1) {
-    return res.redirect('back');
+  if (!values || values.length === 0) {
+    return res.status(404).json({
+      message: 'Post id is undefined',
+    });
   }
 
   Post.findAll({
     where: {
-      categoryId: itemId,
+      categoryId: {
+        [Op.in]: values,
+      },
     },
   })
     .then((results) => {
@@ -128,15 +131,23 @@ exports.postDeleteCategory = (req, res, next) => {
     .then(() => {
       PostCategory.destroy({
         where: {
-          id: itemId,
+          id: {
+            [Op.in]: values,
+          },
         },
-      })
-        .then((result) => {
-          if (result) {
-            return res.sendStatus(200);
-          }
-          res.sendStatus(400);
-        })
-        .catch((error) => next(res));
+      }).then((result) => {
+        if (result) {
+          return res.status(200).json({
+            message: 'Category was successfully deleted'
+          });
+        }
+        res.status(400).json({
+          message: 'Category not found'
+        });
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).json({ message: 'Something went wrong' });
     });
 };

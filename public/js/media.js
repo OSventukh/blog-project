@@ -35,7 +35,7 @@ const confirmDeleting = (url, value, message) => {
     .addEventListener('click', async (event) => {
       try {
         await (0,_utils_fetch__WEBPACK_IMPORTED_MODULE_0__.postData)(url, {
-          values: [value],
+          values: Array.isArray(value) ? value : [value],
         });
 
         location.reload();

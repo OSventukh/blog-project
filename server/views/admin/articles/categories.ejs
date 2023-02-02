@@ -1,11 +1,18 @@
 <%- include('../../includes/admin-header') %>
   <main>
-    <h2>List of Article Categories</h2>
+    <div class="multiple-options">
+      <div class="multiple-options__checked-num">Selected items: <span></span></div>
+      <div class="multiple-options__actions">
+        <button class="button" id="delete-multiple-items">delete</button>
+      </div>
+    </div>
+    <h2>Categories</h2>
   
     <a class="button" href="/admin/articles/add-category">Add New Category</a>
     <div class="content">
       <table>
         <colgroup>
+        <col class="check">
           <col class="name">
           <col class="slug">
           <col class="amount">
@@ -13,6 +20,7 @@
         </colgroup>
         <thead>
           <tr>
+            <th></th>
             <th>Category Name</th>
             <th>Category Slug</th>
             <th>Number of Articles</th>
@@ -23,6 +31,7 @@
           <% if (categories.length> 0) {%>
             <% for (let category of categories) {%>
               <tr>
+                <td><input type="checkbox" class="categories__check" value="<%= category.id %>"/></td>
                 <td>
                   <%= category.category_name %>
                 </td>
@@ -37,7 +46,7 @@
                     <button class="table-options"><i class="fa-solid fa-ellipsis-vertical"></i></button>
                     <ul class="table-options-list">
                       <li>
-                        <a class="articles__item-delete" href="#">Delete</a>
+                        <a class="categories__item-delete" href="#">Delete</a>
                         <input type="hidden" name="categoryId" value="<%=category.id%>">
                       </li>
                     </ul>

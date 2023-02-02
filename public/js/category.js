@@ -179,7 +179,7 @@ var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
 /*!**************************************************!*\
-  !*** ./client-src/javascripts/pages/category.js ***!
+  !*** ./client-src/javascripts/admin/category.js ***!
   \**************************************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_fetch__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/fetch */ "./client-src/javascripts/utils/fetch.js");
@@ -190,6 +190,10 @@ __webpack_require__.r(__webpack_exports__);
 function addCategory() {
   const categoryForm = document.getElementById('edit-category');
 
+  if (!categoryForm) {
+    return;
+  }
+  
   const [modalShow] = (0,_ui_modal__WEBPACK_IMPORTED_MODULE_1__["default"])();
 
   categoryForm.addEventListener('submit', async (event) => {

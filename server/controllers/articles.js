@@ -263,6 +263,7 @@ exports.postDeletePost = (req, res, next) => {
       message: 'Post id is undefined',
     });
   }
+
   Comment.destroy({
     where: {
       postId: { [Op.in]: values },
@@ -277,7 +278,7 @@ exports.postDeletePost = (req, res, next) => {
       });
     })
     .then(() => res.status(200).json({ message: 'success' }))
-    .catch((error) => next(error));
+    .catch((error) => res.status(500).json({message: 'Something went wrong'}));
 };
 
 exports.uploadFile = (req, res, next) => {

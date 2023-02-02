@@ -16,18 +16,6 @@ router.post(
       .optional({ checkFalsy: true })
       .isSlug({ allowEmpty: true })
       .withMessage('Please, enter a valid slug string')
-      .custom((value, {req}) => {
-        return Post.findOne({
-          where: {
-            slug: value
-          }
-        })
-        .then((post) => {
-          if (post) {
-            return Promise.reject('Slug must be an unique')
-          }
-        })
-      }),
   ],
   accessUsersMiddleware(['admin', 'user']),
   articleControllers.postAddPost
