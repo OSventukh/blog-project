@@ -8,15 +8,15 @@
     <div class="article-edit__mobile-control-area">
       <div>
         <% if (status !== 'published') { %>
-          <button class="button article-edit__publish" id="publish">Publish</button>
+          <button class="button article-edit__publish" id="publish-mobile">Publish</button>
         <% } %>
   
         <% if (status === 'published') { %>
-          <button class="button article-edit__publish" id="publish">Update</button>
+          <button class="button article-edit__publish" id="publish-mobile">Update</button>
         <% } %>
   
         <% if (status === 'draft' || status !== 'published') { %>
-          <button class="button article-edit__save" id="save" type="submit">save as draft</button>
+          <button class="button article-edit__save" id="save-mobile">save as draft</button>
         <% } %>
     </div>
       <button id="mobile-article-options" class="article-edit__options"><i class="fa-solid fa-gear"></i></button>

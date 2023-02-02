@@ -268,12 +268,13 @@ function initCKEditor() {
   const contentPlaceholder = 'Type your content';
 
   const saveButton = document.getElementById('save');
+  const saveMobileButton = document.getElementById('save-mobile');
   const publishButton = document.getElementById('publish');
+  const publishMobile = document.getElementById('publish-mobile');
   const token = document
     .querySelector('meta[name="csrf-token"]')
     .getAttribute('content');
   const postId = document.querySelector('input[name="postId"]').value;
-  const categoryId = document.querySelector('input[name="categoryId"]').value;
 
   const title = document.getElementById('article-title');
   const category = document.getElementById('article-category');
@@ -308,6 +309,18 @@ function initCKEditor() {
       publishButton.addEventListener('click', async (event) => {
         saveData(editor, inputs, 'published', postId, actionButtons, event);
       });
+
+      publishMobile.addEventListener('click', async (event) => {
+        saveData(editor, inputs, 'published', postId, actionButtons, event);
+      });
+
+      saveButton.addEventListener('click', async (event) => {
+        saveData(editor, inputs, 'draft', postId, actionButtons, event);
+      });
+
+      saveMobileButton.addEventListener('click', async (event) => {
+        saveData(editor, inputs, 'draft', postId, actionButtons, event);
+      });
     })
     .catch((error) => {
       console.error(error);
@@ -326,9 +339,11 @@ function openArticleMobileMenu() {
 
   window.addEventListener('click', (event) => {
     event.stopPropagation();
-    if (!event.target.matches('.article-edit__control-area') && !event.target.matches('.article-edit__control-area > *')) {
+    if (
+      !event.target.matches('.article-edit__control-area') &&
+      !event.target.matches('.article-edit__control-area > *')
+    ) {
       if (optionsMenu.classList.contains('active')) {
-
         optionsMenu.classList.remove('active');
       }
     }
