@@ -1,3 +1,4 @@
+import BalloonBlockEditor from './ckeditor'
 import { postData, getData } from '../../utils/fetch.js';
 import modal from '../../ui/modal.js';
 const [modalShow, modalClose] = modal();

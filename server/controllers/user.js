@@ -51,6 +51,7 @@ exports.postUserProfile = (req, res, next) => {
   const birthday = req.body.birthday;
   const avatarUrl = req.files.avatar ? req.files.avatar[0].path : null;
 
+  console.log(avatarUrl)
   User.findByPk(userId)
     .then((user) => {
       if (!user) {

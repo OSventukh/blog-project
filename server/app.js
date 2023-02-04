@@ -61,11 +61,11 @@ app.use('/media', express.static(path.join(__dirname, '../media')));
 const imageStorage = multer.diskStorage({
   destination: (req, file, cb) => {
     if (file.fieldname === 'avatar') {
-      cb(null, path.join(process.cwd(), 'media', 'avatars'));
+      cb(null, path.join('media', 'avatars'));
     }
 
     if (file.fieldname === 'upload') {
-      cb(null, path.join(process.cwd(), 'media', 'images'));
+      cb(null, path.join('media', 'images'));
     }
   },
   filename: (req, file, cb) => {

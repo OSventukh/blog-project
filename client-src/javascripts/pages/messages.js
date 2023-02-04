@@ -88,7 +88,7 @@ function messenger() {
         readMessageController.signal
       );
     } catch (error) {
-      if (err.name == 'AbortError') {
+      if (error.name == 'AbortError') {
       }
     }
   };
@@ -120,7 +120,7 @@ function messenger() {
         messagesListField.innerHTML = '';
       }
     } catch (error) {
-      if (err.name == 'AbortError') {
+      if (error.name == 'AbortError') {
       }
       messagesListField.innerHTML = 'Failed to receive message';
     }
@@ -239,7 +239,7 @@ function messenger() {
       });
       messageForm.reset();
     } catch (error) {
-      if (err.name == 'AbortError') {
+      if (error.name == 'AbortError') {
       }
     }
   });
