@@ -100,6 +100,7 @@ function messenger() {
         getMessageController.signal
       );
       if (response.messages.length > 0) {
+        messagesListField.innerHTML = '';
         response.messages.forEach((message) => {
           const listItem = document.createElement('div');
           listItem.classList.add(
@@ -197,7 +198,6 @@ function messenger() {
       messageForm.style.display = 'flex';
       localStorage.setItem('interlocutor', interlocutorId);
       unreadMessages();
-      console.log(interlocutorId);
       await readMessages(interlocutorId);
       await checkUnreadMessages();
       await loadMessages(interlocutorId);
