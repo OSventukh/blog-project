@@ -29,13 +29,7 @@ app.set('views', path.join(__dirname, '/views'));
 app.set('view engine', 'ejs');
 
 app.use(helmet({
-  contentSecurityPolicy: {
-    useDefaults: true,
-    directives: {
-      'script-src': ["'self'", "https://cdn.jsdelivr.net", "https://cdn.socket.io"],
-      'img-src':  '*'
-    }
-  }
+  contentSecurityPolicy: false
 }));
 app.use(compression());
 
