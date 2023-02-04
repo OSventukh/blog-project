@@ -32,7 +32,8 @@ app.use(helmet({
   contentSecurityPolicy: {
     useDefaults: true,
     directives: {
-      'script-src': ["'self'", "https://cdn.jsdelivr.net", "https://cdn.socket.io"]
+      'script-src': ["'self'", "https://cdn.jsdelivr.net", "https://cdn.socket.io"],
+      'img-src':  '*'
     }
   }
 }));
