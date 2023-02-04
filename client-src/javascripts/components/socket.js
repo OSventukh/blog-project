@@ -1,7 +1,8 @@
 const { io } = require('socket.io-client');
 
-export default function connectSocket(userId) {
+export default function connectSocket(loggedUser) {
+
   const socket = io();
-  socket.emit('user', userId);
+  socket.emit('user', loggedUser);
   return socket;
 }

@@ -83,7 +83,7 @@ function onError(error) {
  */
 
 sequelize
-  .sync()
+  .sync({alter: true})
   .then(() => {
     server.listen(port, () => {
       const avatarsFolderPath = path.join(process.cwd(), 'media', 'avatars');

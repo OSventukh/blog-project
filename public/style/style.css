@@ -244,6 +244,7 @@ footer {
 }
 
 .navigation__profile {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -261,6 +262,19 @@ footer {
   border-bottom: none;
 }
 
+.navigation__message-alert {
+  position: absolute;
+  display: none;
+  font-size: 1.2rem;
+  top: 0rem;
+  left: 0rem;
+  color: #ffcd00;
+}
+
+.navigation__message-alert.show {
+  display: block;
+}
+
 .navigation__logged-user {
   border-radius: 50%;
   width: 4.5rem;
@@ -273,7 +287,7 @@ footer {
 
 .navigation__submenu {
   position: absolute;
-  top: 5rem;
+  top: 4rem;
   right: -4rem;
   margin: 0;
   padding: 0;
@@ -300,7 +314,29 @@ footer {
   color: var(--button);
 }
 
-.navigation__logged-user.active + .navigation__submenu,
+.navigation__submenu-messages {
+  position: relative;
+}
+
+.navigation__submenu-messages-amount {
+  background: var(--header);
+  width: 2rem;
+  height: 2rem;
+  position: absolute;
+  right: 0.5rem;
+  top: 0rem;
+  border-radius: 100%;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.4rem;
+}
+
+.navigation__submenu-messages-amount.show {
+  display: flex;
+}
+
+.navigation__logged-user.active ~ .navigation__submenu,
 .navigation__submenu:hover {
   display: flex;
 }
@@ -917,6 +953,12 @@ footer {
 
 .messanger__online-mark.active {
   display: block;
+}
+
+.messanger__unread-messages {
+  position: absolute;
+  right: 1rem;
+  color: #e76f51;
 }
 
 .message__item {

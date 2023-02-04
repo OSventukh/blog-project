@@ -54,9 +54,9 @@ exports.postUserProfile = (req, res, next) => {
   User.findByPk(userId)
     .then((user) => {
       if (!user) {
-       const error = new Error('User not found');
-       error.status = 404;
-       throw error;
+        const error = new Error('User not found');
+        error.status = 404;
+        throw error;
       }
 
       if (nickname) {
@@ -89,7 +89,7 @@ exports.postUserProfile = (req, res, next) => {
       });
     })
     .catch((error) => {
-      next(error)
+      next(error);
     });
 };
 
@@ -141,7 +141,7 @@ exports.getUserArticles = (req, res, next) => {
           createdAt: new Date(post.createdAt).toLocaleString(),
           author: post.author,
           commentsCount: post.comments.length,
-          slug: post.slug
+          slug: post.slug,
         };
       });
       res.render('user/user-articles', {
@@ -150,7 +150,7 @@ exports.getUserArticles = (req, res, next) => {
         totalPage: totalPage,
         currentPage: pageNumber,
         status: status,
-        templateName: 'user-articles'
+        templateName: 'user-articles',
       });
     })
     .catch((error) => {
@@ -180,14 +180,18 @@ exports.getUserMessages = (req, res, next) => {
     include: ['receiver', 'sender'],
     where: {
       [Op.and]: [
-        {[Op.or]: [
-          { receiverId: receiverId },
-          { receiverId: req.session.user.id }
-        ]},
-        {[Op.or]: [
-          { senderId: req.session.user.id },
-          { senderId: receiverId }
-        ]},
+        {
+          [Op.or]: [
+            { receiverId: receiverId },
+            { receiverId: req.session.user.id },
+          ],
+        },
+        {
+          [Op.or]: [
+            { senderId: req.session.user.id },
+            { senderId: receiverId },
+          ],
+        },
       ],
     },
   })
@@ -199,10 +203,21 @@ exports.getUserMessages = (req, res, next) => {
       }
       return res.status(200).json({
         messages: messages,
+        unreadMessages:
+          messages.filter(
+            (message) =>
+              message.seen === false &&
+              message.receiverId === req.session.user.id
+          ).length || null,
         userId: req.session.user.id,
       });
     })
-    .catch((error) => next(error));
+    .catch((error) => {
+      console.log(error);
+      res.status(500).json({
+        message: 'Something went wrong',
+      });
+    });
 };
 
 exports.postUserMessages = (req, res, next) => {
@@ -219,7 +234,6 @@ exports.postUserMessages = (req, res, next) => {
       senderId: req.session.user.id,
       text: message,
     }).then((createdMessage) => {
-
       io.getSocket().emit('message', {
         action: 'send',
         message: createdMessage,
@@ -230,4 +244,61 @@ exports.postUserMessages = (req, res, next) => {
       });
     });
   });
+};
+
+exports.getUnreadSenders = (req, res, next) => {
+  Message.findAll({
+    where: {
+      receiverId: req.session.user.id,
+      seen: false,
+    }
+  })
+  .then((messages) => {
+    
+    const senders = messages.map((message) => message.senderId)
+    const uniqueSenders = new Set(senders);
+
+    console.log(uniqueSenders)
+    return res.status(200).json({
+      messagesAmount: uniqueSenders.size,
+    })
+
+  })
+  .catch((error) => res.status(500).json({
+    message: 'Something went wrong'
+  }))
+}
+
+exports.postSeenMessage = (req, res, next) => {
+  const { senderId, receiverId } = req.body;
+
+  if (receiverId != req.session.user.id) {
+    return res.status(401).json({
+      message: 'Invalid user',
+    });
+  }
+
+  Message.findAll({
+    where: {
+      receiverId: req.session.user.id,
+      senderId: senderId,
+    },
+  })
+    .then((messages) => {
+      return messages.forEach((message) => {
+        message.seen = true;
+        return message.save();
+      });
+    })
+    .then(() => {
+      console.log('success')
+      res.status(200).json({
+        message: 'Success'
+      })
+    })
+    .catch((error) => {
+      res.status(500).json({
+        message: 'Something went wrong',
+      });
+    });
 };

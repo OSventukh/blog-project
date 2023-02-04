@@ -29,5 +29,7 @@ router.get('/user-messages/:userId',  accessUsersMiddleware(['admin', 'user']), 
 
 router.post('/user-messages',  accessUsersMiddleware(['admin', 'user']), userControllers.postUserMessages);
 
+router.get('/user-messages-unread-sender', accessUsersMiddleware(['admin', 'user']), userControllers.getUnreadSenders)
 
+router.post('/user-messages-read', accessUsersMiddleware(['admin', 'user']), userControllers.postSeenMessage)
 module.exports = router;

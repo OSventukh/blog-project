@@ -40,8 +40,9 @@
                     <div class="navigation__logged-user" id="loggedUserAvatar" tabindex="0" >
                       <img src="/<%=loggedUser.avatar%>" alt="<%=loggedUser.nickname %>">
                     </div>
+                    <div class="navigation__message-alert"><i class="fa-solid fa-envelope"></i></div>
                     <ul class="navigation__submenu">
-                      <li><a href="/messages">Messages</a></li>
+                      <li><a class="navigation__submenu-messages" href="/messages">Messages <span class="navigation__submenu-messages-amount"></span></a></li>
                       <li><a href="/profile/<%=loggedUser.nickname%>">Profile</a></li>
                       <% if (loggedUser.role === 'admin') { %> 
                         <li><a href="/admin">Admin Panel</a></li>

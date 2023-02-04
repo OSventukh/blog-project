@@ -2,8 +2,10 @@ const token = document
   .querySelector('meta[name="csrf-token"]')
   .getAttribute('content');
 
-export async function getData(url) {
-  const res = await fetch(url);
+export async function getData(url, signal) {
+  const res = await fetch(url, {
+    signal: signal,
+  });
   const result = await res.json()
   if (!res.ok) {
     throw new Error(result.message || 'Something went wrong')
@@ -11,7 +13,7 @@ export async function getData(url) {
   return result;
 }
 
-export async function postData(url, data, contentType) {
+export async function postData(url, data, contentType, signal) {
   let res = await fetch(url, {
     method: 'POST',
     headers: {
@@ -19,6 +21,7 @@ export async function postData(url, data, contentType) {
       'Content-Type': contentType || 'application/json',
     },
     body: contentType ? data : JSON.stringify(data),
+    signal: signal,
   });
 
   const result = await res.json();
