@@ -179,6 +179,7 @@ exports.getUserMessages = (req, res, next) => {
 
   Message.findAll({
     include: ['receiver', 'sender'],
+    order: [['createdAt', 'ASC']],
     where: {
       [Op.and]: [
         {
@@ -198,6 +199,7 @@ exports.getUserMessages = (req, res, next) => {
   })
     .then((messages) => {
       if (!messages) {
+
         const error = new Error('messages not found');
         error.statusCode = 404;
         throw error;
